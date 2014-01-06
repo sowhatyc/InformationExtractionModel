@@ -6,6 +6,7 @@ package topicmodel;
 
 import Utils.StaticLib;
 import Utils.Storage;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,10 +19,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -604,7 +607,7 @@ public class PageAnalysis {
         List<TextNode> nodeTextSeq = new ArrayList<>();
         List<TextNodeUnit> tnuList = new ArrayList<>();
         TextNode tN = new TextNode();
-        if(!node.getTextNodeUnit().getText().trim().equals("") || (node.isIsAllHave() && node.getChildNode() == null) || node.isHasOwnIndividualChild()){
+        if(!node.getTextNodeUnit().getText().trim().equals("") || (node.isIsAllHave() && node.getChildNode() == null) /*|| node.isHasOwnIndividualChild()*/){
             tnuList.add(node.getTextNodeUnit());
             tN.setTextNode(tnuList);
             nodeTextSeq.add(tN);
@@ -612,20 +615,27 @@ public class PageAnalysis {
         if(node.getChildNode() != null){
             for(Node childNode : node.getChildNode()){
                 if(isAlign && !childNode.isIsAllHave()){
-                    List<Node> nodeList = new LinkedList<>();
+                    Stack nodeList = new Stack();
+//                	List<Node> nodeList = new LinkedList<>();
                     nodeList.add(childNode);
                     List<TextNodeUnit> tnuChildList = new ArrayList<>();
                     while(!nodeList.isEmpty()){
-                        Node qNode = nodeList.get(0);
-                        if(!qNode.getTextNodeUnit().getText().equals("")){
+                    	Node qNode = (Node) nodeList.pop();
+//                    	Node qNode = nodeList.get(0);
+                        if(!qNode.getTextNodeUnit().getText().equals("") || qNode.getTextNodeUnit().getTag().getName().equals("a")){
                             tnuChildList.add(qNode.getTextNodeUnit());
+//                        	tnuList.add(qNode.getTextNodeUnit());
                         }
                         if(qNode.getChildNode() != null){
-                            nodeList.addAll(qNode.getChildNode());
+                        	int size = qNode.getChildNode().size();
+                        	for(int i=0; i<size; i++){
+                        		nodeList.push(qNode.getChildNode().get(size-i-1));
+                        	}
                         }
-                        nodeList.remove(0);
+//                        nodeList.remove(0);
                     }
                     tnuList.addAll(tnuChildList);
+                    
                     if(!tnuList.isEmpty()){
                         int index = nodeTextSeq.indexOf(tN);
                         if(index != -1){
@@ -640,6 +650,10 @@ public class PageAnalysis {
                 }
             }
         }
+//        if(!tnuList.isEmpty()){
+//        	tN.setTextNode(tnuList);
+//        	nodeTextSeq.add(tN);
+//        }
         return nodeTextSeq;
     }
     
