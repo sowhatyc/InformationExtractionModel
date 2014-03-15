@@ -6,6 +6,7 @@ package topicmodel;
 
 import Utils.StaticLib;
 import Utils.WebCrawler;
+import topicmodel.TextNode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +35,6 @@ import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 
@@ -59,23 +59,23 @@ public class Test {
 //                    String url = "http://www.smzdm.com/";
 //                    String url = "http://forum.xitek.com/forum-2-1.html";
 //        String url = "http://bbs.dospy.com/thread-15727296-1-741-1.html";
-//                    String retVal[] = new WebCrawler().getContent(url);
+                    String retVal[] = new WebCrawler().getContent(url);
                     PageAnalysis pa = new PageAnalysis();
-                    StringBuffer sb = new StringBuffer();
-                    BufferedReader br = null;
-                    try {
-						br = new BufferedReader(new FileReader("Example.txt"));
-						String s;
-	                    while((s = br.readLine()) != null){
-	                    	sb.append(s);
-	                    }
-	                    br.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-                    List<Elements> elesList = pa.getAnalysisiElements(sb.toString(), url, true);
-//                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, true);
+//                    StringBuffer sb = new StringBuffer();
+//                    BufferedReader br = null;
+//                    try {
+//						br = new BufferedReader(new FileReader("Example.txt"));
+//						String s;
+//	                    while((s = br.readLine()) != null){
+//	                    	sb.append(s);
+//	                    }
+//	                    br.close();
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//                    List<Elements> elesList = pa.getAnalysisiElements(sb.toString(), url, true);
+                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, true);
 //        String content = new WebCrawler().getContentMethod2(url);
 //                    long start = System.currentTimeMillis();
 //                    Document doc = Jsoup.parse(retVal[1], StaticLib.getBaseUrl(url));
@@ -181,17 +181,24 @@ public class Test {
 //        }
 //        List<Elements> elesList = pa.getAnalysisiElements(content, url, true);
         System.out.println(elesList.size());
-        List<List<String>> entrys = pa.getElementNode(elesList);
-        int count = 0;
-        for(List<String> entry : entrys){
-        	if(count++ > 19){
-        		break;
-        	}
-            System.out.println("*******************************");
-            for(String str : entry){
-                System.out.println(str);
-            }
-        }
+        List<EntityNode> elementTextList = pa.getElementNode(elesList);
+        
+        
+//        List<List<String>> entrys = pa.displayElementTextList(elementTextList);
+//        int count = 0;
+//        for(List<String> entry : entrys){
+//        	if(count++ > 19){
+//        		break;
+//        	}
+//            System.out.println("*******************************");
+//            int num = 0;
+//            for(String str : entry){
+//                System.out.println(num + "  :   " + str);
+//                num++;
+//            }
+//        }
+        
+        
 //        Map<String, ArrayList<Element>> minimalGeneralSeq = pa.getMinimalGeneralizationSeq(elesList);
 //        Iterator<String> iter = minimalGeneralSeq.keySet().iterator();
 //        while(iter.hasNext()){

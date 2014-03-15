@@ -213,6 +213,11 @@ public class PageAnalysis {
                 }
             }
         }
+        /*
+         * get the sibling node and parent sibling node
+         * 
+         
+        
         Element priviousEle = elementsList.get(0).get(0).previousElementSibling();
         while(priviousEle != null && ((!priviousEle.tag().formatAsBlock() && !StaticLib.tagSet.contains(priviousEle.tagName())) || priviousEle.text().isEmpty())){
         	priviousEle = priviousEle.previousElementSibling();
@@ -231,6 +236,7 @@ public class PageAnalysis {
             entryEles.add(priviousEle);
             elementsList.add(0, entryEles);
         }
+        */
         return elementsList;
     }
     
@@ -500,7 +506,7 @@ public class PageAnalysis {
         }
     }
     
-    public List<List<String>> getElementNode(List<Elements> elesList){
+    public List<EntityNode> getElementNode(List<Elements> elesList){
         List<ElementNode> eNodeList = new ArrayList<>();
         int count = 0;
         for(Elements eles : elesList){
@@ -567,31 +573,55 @@ public class PageAnalysis {
                 return o1.getPositionIndex() - o2.getPositionIndex();
             }
         });
-        List<List<String>> entrys = new ArrayList<>();
+        List<EntityNode> entityList = new ArrayList<>();
+//        List<List<String>> entrys = new ArrayList<>();
         for(ElementNode eNode : eNodeList){
-            List<TextNode> elementNT = getElementNodeTextSeq(eNode);
-            if(elementNT != null && !elementNT.isEmpty()){
-                List<String> entry = new ArrayList<>();
-                for(TextNode tNode : elementNT){
-                    String str = "";
-                    for(TextNodeUnit tnu : tNode.getTextNode()){
-                        str += "@Tag: " + tnu.getTag().getName() + " ";
-                        str += "@Attributes: ";
-                        for(Attribute attr : tnu.getAttributes()){
-                            str += attr.getKey() + "=\"" + attr.getValue() + "\" ";
-                        }
-                        str += "@Text: " + tnu.getText() + " ";
-                    }
-                    entry.add(str);
-                }
-                entrys.add(entry);
+            EntityNode entityNode = getElementNodeTextSeq(eNode);
+            if(entityNode != null && !entityNode.getEntityUnit().isEmpty()){
+            	entityList.add(entityNode);
+//                List<String> entry = new ArrayList<>();
+//                for(TextNode tNode : elementNT){
+//                    String str = "";
+//                    for(TextNodeUnit tnu : tNode.getTextNode()){
+//                        str += "@Tag: " + tnu.getTag().getName() + " ";
+//                        str += "@Attributes: ";
+//                        for(Attribute attr : tnu.getAttributes()){
+//                            str += attr.getKey() + "=\"" + attr.getValue() + "\" ";
+//                        }
+//                        str += "@Text: " + tnu.getText() + " ";
+//                    }
+//                    entry.add(str);
+//                }
+//                entrys.add(entry);
             }
         }
         
-        return entrys;
+        return entityList;
     }
     
-    private List<TextNode> getElementNodeTextSeq(ElementNode eNode){
+    public List<List<String>> displayElementTextList(List<EntityNode> entityList){
+    	List<List<String>> entrys = new ArrayList<>();
+    	for(int i=0; i<entityList.size(); i++){
+    		List<TextNode> elementNT = entityList.get(i).getEntityUnit();
+    		List<String> entry = new ArrayList<>();
+    		for(TextNode tNode : elementNT){
+    			String str = "";
+    			for(TextNodeUnit tnu : tNode.getTextNode()){
+    				str += "@Tag: " + tnu.getTag().getName() + " ";
+    				str += "@Attributes: ";
+    				for(Attribute attr : tnu.getAttributes()){
+    					str += attr.getKey() + "=\"" + attr.getValue() + "\" ";
+    				}
+    				str += "@Text: " + tnu.getText() + " ";
+    			}
+    			entry.add(str);
+    		}
+    		entrys.add(entry);
+    	}
+    	return entrys;
+    }
+    
+    private EntityNode getElementNodeTextSeq(ElementNode eNode){
         List<TextNode> eNodeTextSeq = null;
         if(eNode.getNodes() != null){
             eNodeTextSeq = new ArrayList<>();
@@ -599,7 +629,9 @@ public class PageAnalysis {
                 eNodeTextSeq.addAll(getNodeTexSeq(node, node.isIsAllHave()));
             }
         }
-        return eNodeTextSeq;
+        EntityNode entityNode = new EntityNode();
+        entityNode.setEntityUnit(eNodeTextSeq);
+        return entityNode;
     }
     
     
