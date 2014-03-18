@@ -16,14 +16,14 @@ public class TextNode {
     /**
      * @return the textNode
      */
-    public List<TextNodeUnit> getTextNode() {
+    public List<TextNodeUnit> getTextNodeUnit() {
         return textNode;
     }
 
     /**
      * @param textNode the textNode to set
      */
-    public void setTextNode(List<TextNodeUnit> textNode) {
+    public void setTextNodeUnit(List<TextNodeUnit> textNode) {
         this.textNode = textNode;
     }
 }

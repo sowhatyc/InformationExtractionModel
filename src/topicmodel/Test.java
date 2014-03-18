@@ -183,21 +183,37 @@ public class Test {
         System.out.println(elesList.size());
         List<EntityNode> elementTextList = pa.getElementNode(elesList);
         
-        
-//        List<List<String>> entrys = pa.displayElementTextList(elementTextList);
-//        int count = 0;
-//        for(List<String> entry : entrys){
-//        	if(count++ > 19){
-//        		break;
+//        Map<String, List<EntityNode>> similarEntityNodes = pa.getSimilarEntityNodes(elementTextList);
+//        int maxSize = Integer.MIN_VALUE;
+//        String maxSeq = "";
+//        Iterator<String> iter = similarEntityNodes.keySet().iterator();
+//        while(iter.hasNext()){
+//        	String seq = iter.next();
+//        	if(similarEntityNodes.get(seq).size() > maxSize){
+//        		maxSeq = seq;
+//        		maxSize = similarEntityNodes.get(seq).size();
 //        	}
-//            System.out.println("*******************************");
-//            int num = 0;
-//            for(String str : entry){
-//                System.out.println(num + "  :   " + str);
-//                num++;
-//            }
 //        }
+//        System.out.println(maxSeq);
         
+        
+//        List<List<String>> entrys = pa.displayElementTextList(similarEntityNodes.get(maxSeq));
+        List<List<String>> entrys = pa.displayElementTextList(elementTextList);
+        int count = 0;
+        for(List<String> entry : entrys){
+        	if(count++ > 19){
+        		break;
+        	}
+            System.out.println("*******************************");
+            int num = 0;
+            for(String str : entry){
+                System.out.println(num + "  :   " + str);
+                num++;
+            }
+        }
+        
+        System.out.print("\n\n\n");
+        pa.getFeatures(elementTextList);
         
 //        Map<String, ArrayList<Element>> minimalGeneralSeq = pa.getMinimalGeneralizationSeq(elesList);
 //        Iterator<String> iter = minimalGeneralSeq.keySet().iterator();

@@ -213,9 +213,7 @@ public class PageAnalysis {
                 }
             }
         }
-        /*
-         * get the sibling node and parent sibling node
-         * 
+        
          
         
         Element priviousEle = elementsList.get(0).get(0).previousElementSibling();
@@ -227,6 +225,9 @@ public class PageAnalysis {
             entryEles.add(priviousEle);
             elementsList.add(0, entryEles);
         }
+        /*
+         * get the sibling node and parent sibling node
+         * 
         priviousEle = elementsList.get(0).get(0).parent().previousElementSibling();
         while(priviousEle != null && ((!priviousEle.tag().formatAsBlock() && !StaticLib.tagSet.contains(priviousEle.tagName())) || priviousEle.text().isEmpty())){
             priviousEle = priviousEle.previousElementSibling();
@@ -599,6 +600,87 @@ public class PageAnalysis {
         return entityList;
     }
     
+    public void getFeatures(List<EntityNode> entityList){
+    	if(entityList == null || entityList.size() == 0){
+    		return;
+    	}
+    	for(EntityNode entity : entityList){
+    		for(TextNode tn : entity.getEntityUnit()){
+    			int textNum = 0;
+        		int linkNum = 0;
+        		int longestTextSize = 0;
+        		boolean isOnlyNumeric = true;
+        		boolean isContainDate = false;
+        		String titleAttr = "";
+        		String classAttr = "";
+    			for(TextNodeUnit tnu : tn.getTextNodeUnit()){
+    				String text = tnu.getText();
+    				if(!text.equals("")){
+    					textNum++;
+    					if(tnu.getText().length() > longestTextSize){
+    						longestTextSize = tnu.getText().length();
+    					}
+    					Pattern pattern = Pattern.compile("^[0-9/:-]+$");
+    					Matcher isNum = pattern.matcher(text);
+    					if(!isNum.matches()){
+    						isOnlyNumeric = false;
+    					}
+    					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2})|((分钟|秒|小时|天)前))");
+    					Matcher isDate = pattern.matcher(text);
+    					if(isDate.matches()){
+    						isContainDate = true;
+    					}
+    				}else{
+    					isOnlyNumeric = false;
+    					isContainDate = false;
+    				}
+    				if(tnu.getTag().getName().equals("a")){
+    					linkNum++;
+    				}
+    				if(tnu.getAttributes().hasKey("title")){
+    					titleAttr += "_" + tnu.getAttributes().get("title");
+    				}
+    				if(tnu.getAttributes().hasKey("class")){
+    					classAttr += "_" + tnu.getAttributes().get("class");
+    				}
+    			}
+    			if(titleAttr.equals("")){
+    				titleAttr = "none";
+    			}else{
+    				titleAttr = titleAttr.replaceAll("\\s", "\\s");
+    			}
+    			if(classAttr.equals("")){
+    				classAttr = "none";
+    				classAttr = classAttr.replaceAll("\\s", "\\s");
+    			}
+    			System.out.println(textNum + " " + linkNum + " " + longestTextSize + " " + isOnlyNumeric + " "
+    					+ isContainDate + " " + titleAttr + " " + classAttr);
+    		}
+    		System.out.println();
+    	}
+    }
+    
+    public Map<String, List<EntityNode>> getSimilarEntityNodes(List<EntityNode> entityList){
+    	if(entityList == null || entityList.size() == 0){
+    		return null;
+    	}
+    	Map<String, List<EntityNode>> similarEntityNodes = new HashMap<String, List<EntityNode>>();
+    	for(EntityNode entity : entityList){
+    		String seq = "";
+    		for(TextNode tn : entity.getEntityUnit()){
+    			seq += tn.getTextNodeUnit().get(0).getTag().getName() + " ";
+    		}
+    		if(similarEntityNodes.containsKey(seq)){
+    			similarEntityNodes.get(seq).add(entity);
+    		}else{
+    			List<EntityNode> entityNodeList = new ArrayList<EntityNode>();
+    			entityNodeList.add(entity);
+    			similarEntityNodes.put(seq, entityNodeList);
+    		}
+    	}
+    	return similarEntityNodes;
+    }
+    
     public List<List<String>> displayElementTextList(List<EntityNode> entityList){
     	List<List<String>> entrys = new ArrayList<>();
     	for(int i=0; i<entityList.size(); i++){
@@ -606,7 +688,7 @@ public class PageAnalysis {
     		List<String> entry = new ArrayList<>();
     		for(TextNode tNode : elementNT){
     			String str = "";
-    			for(TextNodeUnit tnu : tNode.getTextNode()){
+    			for(TextNodeUnit tnu : tNode.getTextNodeUnit()){
     				str += "@Tag: " + tnu.getTag().getName() + " ";
     				str += "@Attributes: ";
     				for(Attribute attr : tnu.getAttributes()){
@@ -629,6 +711,17 @@ public class PageAnalysis {
                 eNodeTextSeq.addAll(getNodeTexSeq(node, node.isIsAllHave()));
             }
         }
+        for(TextNode tn : eNodeTextSeq){
+        	for(int i=0; i<tn.getTextNodeUnit().size()-1; i++){
+        		if(tn.getTextNodeUnit().get(i).getTag().getName().equals("a") && 
+        				tn.getTextNodeUnit().get(i).getText().equals("") && 
+        				!tn.getTextNodeUnit().get(i+1).getText().equals("")){
+        			tn.getTextNodeUnit().get(i).setText(tn.getTextNodeUnit().get(i+1).getText());
+        			tn.getTextNodeUnit().get(i).getAttributes().addAll(tn.getTextNodeUnit().get(i+1).getAttributes());
+        			tn.getTextNodeUnit().remove(i+1);
+        		}
+        	}
+        }
         EntityNode entityNode = new EntityNode();
         entityNode.setEntityUnit(eNodeTextSeq);
         return entityNode;
@@ -637,11 +730,11 @@ public class PageAnalysis {
     
     private List<TextNode> getNodeTexSeq(Node node, boolean isAlign){
         List<TextNode> nodeTextSeq = new ArrayList<>();
-        List<TextNodeUnit> tnuList = new ArrayList<>();
+        List<TextNodeUnit> tnuList = new LinkedList<>();
         TextNode tN = new TextNode();
         if(!node.getTextNodeUnit().getText().trim().equals("") || (node.isIsAllHave() && node.getChildNode() == null) /*|| node.isHasOwnIndividualChild()*/){
             tnuList.add(node.getTextNodeUnit());
-            tN.setTextNode(tnuList);
+            tN.setTextNodeUnit(tnuList);
             nodeTextSeq.add(tN);
         }
         if(node.getChildNode() != null){
@@ -650,7 +743,7 @@ public class PageAnalysis {
                     Stack nodeList = new Stack();
 //                	List<Node> nodeList = new LinkedList<>();
                     nodeList.add(childNode);
-                    List<TextNodeUnit> tnuChildList = new ArrayList<>();
+                    List<TextNodeUnit> tnuChildList = new LinkedList<>();
                     while(!nodeList.isEmpty()){
                     	Node qNode = (Node) nodeList.pop();
 //                    	Node qNode = nodeList.get(0);
@@ -671,9 +764,9 @@ public class PageAnalysis {
                     if(!tnuList.isEmpty()){
                         int index = nodeTextSeq.indexOf(tN);
                         if(index != -1){
-                            nodeTextSeq.get(index).setTextNode(tnuList);
+                            nodeTextSeq.get(index).setTextNodeUnit(tnuList);
                         }else{
-                            tN.setTextNode(tnuList);
+                            tN.setTextNodeUnit(tnuList);
                             nodeTextSeq.add(tN);
                         }
                     }
