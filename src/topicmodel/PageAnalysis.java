@@ -163,8 +163,9 @@ public class PageAnalysis {
                 boolean find = false;
                 for(Element ele : childEles){
                     if(!find){
-                        String eleAttr = getVerifiedSequence(ele, 1, true, false);
-                        if(eleAttr == null){
+//                        String eleAttr = getVerifiedSequence(ele, 1, true, false);
+                    	String eleAttr = getVerifiedSequence(ele, 1, false, false);
+                    	if(eleAttr == null){
                             continue;
                         }
                         eleAttr = "@" + eleAttr.substring(1);
@@ -406,7 +407,7 @@ public class PageAnalysis {
         }
         List<String> childEleSequence = new ArrayList<>();
         for(Element ele : childElements){
-            String sequence = getHierarchicalSequence(ele, 2, false, false);
+            String sequence = getHierarchicalSequence(ele, 3, false, false);
             childEleSequence.add(sequence.replaceAll("@null", ""));
         }
         int maxOccourence = 0;
@@ -442,9 +443,9 @@ public class PageAnalysis {
                                 Element eleInfo = childElements.get(k);
                                 repeatElementSizeCpy += eleInfo.getAllElements().size();
                                 info = "@" + eleInfo.tagName();
-                                for(Attribute attr : eleInfo.attributes()){
-                                    info += " " + attr.getKey();
-                                }
+//                                for(Attribute attr : eleInfo.attributes()){
+//                                    info += " " + attr.getKey();
+//                                }
                                 startElementsInfoCpy.add(info);
                             }
                         }
@@ -611,7 +612,7 @@ public class PageAnalysis {
         		int longestTextSize = 0;
         		boolean isOnlyNumeric = true;
         		boolean isContainDate = false;
-        		String titleAttr = "";
+        		boolean titleContainDate = false;
         		String classAttr = "";
     			for(TextNodeUnit tnu : tn.getTextNodeUnit()){
     				String text = tnu.getText();
@@ -637,24 +638,23 @@ public class PageAnalysis {
     				if(tnu.getTag().getName().equals("a")){
     					linkNum++;
     				}
-    				if(tnu.getAttributes().hasKey("title")){
-    					titleAttr += "_" + tnu.getAttributes().get("title");
+    				if(tnu.getAttributes().hasKey("title") && !tnu.getAttributes().get("title").equals("")){
+    					Pattern pattern = Pattern.compile(".*?(\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2}");
+    					Matcher isDate = pattern.matcher(tnu.getAttributes().get("title"));
+    					if(isDate.matches()){
+    						titleContainDate = true;
+    					}
     				}
-    				if(tnu.getAttributes().hasKey("class")){
-    					classAttr += "_" + tnu.getAttributes().get("class");
+    				if(classAttr.equals("") && tnu.getAttributes().hasKey("class") && !tnu.getAttributes().get("class").equals("")){
+    					classAttr = tnu.getAttributes().get("class");
+    					classAttr = classAttr.replaceAll("\\s", "");
     				}
-    			}
-    			if(titleAttr.equals("")){
-    				titleAttr = "none";
-    			}else{
-    				titleAttr = titleAttr.replaceAll("\\s", "\\s");
     			}
     			if(classAttr.equals("")){
     				classAttr = "none";
-    				classAttr = classAttr.replaceAll("\\s", "\\s");
     			}
     			System.out.println(textNum + " " + linkNum + " " + longestTextSize + " " + isOnlyNumeric + " "
-    					+ isContainDate + " " + titleAttr + " " + classAttr);
+    					+ isContainDate + " " + titleContainDate + " " + classAttr);
     		}
     		System.out.println();
     	}

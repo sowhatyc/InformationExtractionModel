@@ -52,12 +52,13 @@ public class Test {
         //tieba's content consists javascript
 //                    String url = "http://tieba.baidu.com/f?ie=utf-8&kw=%B1%F6%B5%C3k5";
 //                    String url = "http://tieba.baidu.com/p/2426049054";
-                    String url = "http://bbs.gfan.com/forum-1260-1.html";
+//                    String url = "http://bbs.gfan.com/forum-1260-1.html";
 //                    String url = "http://bbs.gfan.com/forum.php?mod=viewthread&tid=6273531&extra=page%3D1";
-//                    String url = "http://bbs.anzhi.com/thread-6995302-1-1.html";
+//                    String url = "http://bbs.anzhi.com/thread-6988307-1-1.html";
 //                    String url = "http://bbs.anzhi.com/forum-1020-1.html";
 //                    String url = "http://www.smzdm.com/";
 //                    String url = "http://forum.xitek.com/forum-2-1.html";
+    		String url = "http://forum.xitek.com/thread-1255673-1-1-1.html";
 //        String url = "http://bbs.dospy.com/thread-15727296-1-741-1.html";
                     String retVal[] = new WebCrawler().getContent(url);
                     PageAnalysis pa = new PageAnalysis();
@@ -75,7 +76,7 @@ public class Test {
 //						e.printStackTrace();
 //					}
 //                    List<Elements> elesList = pa.getAnalysisiElements(sb.toString(), url, true);
-                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, true);
+                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, false);
 //        String content = new WebCrawler().getContentMethod2(url);
 //                    long start = System.currentTimeMillis();
 //                    Document doc = Jsoup.parse(retVal[1], StaticLib.getBaseUrl(url));
