@@ -45,6 +45,7 @@ import org.jsoup.select.Elements;
 public class Test {
     
     public static void main(String args[]){
+    	//百度贴吧正文无法处理，搜狐论坛无法处理（javascript）
             //        System.out.println(new WebCrawler().getContent("http://bbs.tianya.cn/list-develop-1.shtml"));
             //        System.out.println(new WebCrawler().getContentMethod2("http://bbs.tianya.cn/list-develop-1.shtml"));
 //                    String url = "http://bbs.tianya.cn/list-828-1.shtml";
@@ -58,7 +59,16 @@ public class Test {
 //                    String url = "http://bbs.anzhi.com/forum-1020-1.html";
 //                    String url = "http://www.smzdm.com/";
 //                    String url = "http://forum.xitek.com/forum-2-1.html";
-    		String url = "http://forum.xitek.com/thread-1255673-1-1-1.html";
+//                    String url = "http://tt.mop.com/topic/list_1_8_0_0.html";
+//                    String url = "http://bbs.ifeng.com/forumdisplay.php?fid=218";
+//                    String url = "http://bbs.news.163.com/list/society.html";
+//    				String url = "http://club.history.sina.com.cn/forum-51-1.html";
+//    				String url = "http://club.kdnet.net/list.asp?boardid=1";
+//    	 			String url = "http://pop.pcpop.com/forum-2-1.html";
+//    				String url = "http://bbs.taobao.com/catalog/424015----1.htm?spm=0.0.0.0.8TuYtx#ThreadList";
+//    				String url = "http://club.auto.qq.com/f-16-1.htm";
+    				String url = "http://bbs.meizu.cn/forum-22-1.html";
+//    		String url = "http://forum.xitek.com/thread-1255673-1-1-1.html";
 //        String url = "http://bbs.dospy.com/thread-15727296-1-741-1.html";
                     String retVal[] = new WebCrawler().getContent(url);
                     PageAnalysis pa = new PageAnalysis();
@@ -76,7 +86,7 @@ public class Test {
 //						e.printStackTrace();
 //					}
 //                    List<Elements> elesList = pa.getAnalysisiElements(sb.toString(), url, true);
-                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, false);
+                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, true);
 //        String content = new WebCrawler().getContentMethod2(url);
 //                    long start = System.currentTimeMillis();
 //                    Document doc = Jsoup.parse(retVal[1], StaticLib.getBaseUrl(url));

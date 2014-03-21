@@ -143,6 +143,7 @@ public class PageAnalysis {
         String attrKey = fea.getAttrKey();
         String attrVal = fea.getAttrVal();
         Elements elements = null;
+        content = content.replaceAll("&nbsp;", "");
         Document doc = Jsoup.parse(content, baseUrl);
         if(attrVal.equals("@OnlyAttrKey")){
             elements = doc.body().getElementsByAttribute(attrKey);
@@ -160,9 +161,9 @@ public class PageAnalysis {
             //should be correct
             for(int i=0; i<elements.size(); i++){
                 Elements childEles = elements.get(i).children();
-                boolean find = false;
+//                boolean find = false;
                 for(Element ele : childEles){
-                    if(!find){
+//                    if(!find){
 //                        String eleAttr = getVerifiedSequence(ele, 1, true, false);
                     	String eleAttr = getVerifiedSequence(ele, 1, false, false);
                     	if(eleAttr == null){
@@ -171,15 +172,18 @@ public class PageAnalysis {
                         eleAttr = "@" + eleAttr.substring(1);
                         eleAttr = eleAttr.substring(0, eleAttr.indexOf("</")-1);
                         
-                        if(eleAttr.equals(fea.getStartElementsInfo().get(0))){
-                            find = true;
+                        if(eleAttr.equals(fea.getStartElementsInfo().get(0)) && 
+                        		ele.getAllElements().size() >= fea.getRepeatElementSize()){
+                        	entryEles = new Elements();
+                        	entryEles.add(ele);
+                        	elementsList.add(entryEles); 
                         }
-                    }
-                    if(find){
-                        entryEles = new Elements();
-                        entryEles.add(ele);
-                        elementsList.add(entryEles); 
-                    }
+//                    }
+//                    if(find){
+//                        entryEles = new Elements();
+//                        entryEles.add(ele);
+//                        elementsList.add(entryEles); 
+//                    }
                 }
             }
         }else{
@@ -407,7 +411,12 @@ public class PageAnalysis {
         }
         List<String> childEleSequence = new ArrayList<>();
         for(Element ele : childElements){
-            String sequence = getHierarchicalSequence(ele, 3, false, false);
+        	String sequence = "";
+        	if(ele.children().size() < 2){
+        		sequence = getHierarchicalSequence(ele, 3, false, false);
+        	}else{
+        		sequence = getHierarchicalSequence(ele, 2, false, false);
+        	}
             childEleSequence.add(sequence.replaceAll("@null", ""));
         }
         int maxOccourence = 0;
@@ -526,10 +535,13 @@ public class PageAnalysis {
         int level = 0;
         int maximumNum = Integer.MIN_VALUE;
         Map<String, List<ElementNode>>  seqENodeMap = new HashMap<>();
+        Map<String, List<ElementNode>>  seqENodeMapCpy = new HashMap<>();
         int nochange = 0;
         int oldMaximumNum = maximumNum;
         do{
             maximumNum = Integer.MIN_VALUE;
+            seqENodeMapCpy.clear();
+            seqENodeMapCpy.putAll(seqENodeMap);
             seqENodeMap.clear();
             level++;
             for(ElementNode eNode : eNodeList){
@@ -557,11 +569,13 @@ public class PageAnalysis {
                 break;
             }
         }while(maximumNum >= continualNum);
-        
-        Iterator<String> iter = seqENodeMap.keySet().iterator();
+        if(seqENodeMapCpy.isEmpty()){
+        	seqENodeMapCpy.putAll(seqENodeMap);
+        }
+        Iterator<String> iter = seqENodeMapCpy.keySet().iterator();
         eNodeList.clear();
         while(iter.hasNext()){
-            List<ElementNode> eNList = seqENodeMap.get(iter.next());
+            List<ElementNode> eNList = seqENodeMapCpy.get(iter.next());
             if(eNList.size() > 1){
                 eNList = alignElementNode(eNList);
             }
@@ -614,32 +628,21 @@ public class PageAnalysis {
         		boolean isContainDate = false;
         		boolean titleContainDate = false;
         		String classAttr = "";
+        		String text = "";
     			for(TextNodeUnit tnu : tn.getTextNodeUnit()){
-    				String text = tnu.getText();
-    				if(!text.equals("")){
+    				if(!tnu.getText().equals("")){
     					textNum++;
+    					text += tnu.getText();
     					if(tnu.getText().length() > longestTextSize){
     						longestTextSize = tnu.getText().length();
     					}
-    					Pattern pattern = Pattern.compile("^[0-9/:-]+$");
-    					Matcher isNum = pattern.matcher(text);
-    					if(!isNum.matches()){
-    						isOnlyNumeric = false;
-    					}
-    					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2})|((分钟|秒|小时|天)前))");
-    					Matcher isDate = pattern.matcher(text);
-    					if(isDate.matches()){
-    						isContainDate = true;
-    					}
-    				}else{
-    					isOnlyNumeric = false;
-    					isContainDate = false;
+    					
     				}
-    				if(tnu.getTag().getName().equals("a")){
+    				if(tnu.getTag().getName().equals("a") || tnu.getTag().getName().equals("img")){
     					linkNum++;
     				}
     				if(tnu.getAttributes().hasKey("title") && !tnu.getAttributes().get("title").equals("")){
-    					Pattern pattern = Pattern.compile(".*?(\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2}");
+    					Pattern pattern = Pattern.compile("(?is).*?(\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2}[^\\d]*?");
     					Matcher isDate = pattern.matcher(tnu.getAttributes().get("title"));
     					if(isDate.matches()){
     						titleContainDate = true;
@@ -652,6 +655,21 @@ public class PageAnalysis {
     			}
     			if(classAttr.equals("")){
     				classAttr = "none";
+    			}
+    			if(!text.equals("")){
+    				Pattern pattern = Pattern.compile("^/?\\d[0-9/:-]*$");
+    				Matcher isNum = pattern.matcher(text);
+					if(!isNum.matches()){
+						isOnlyNumeric = false;
+					}
+					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2})|((分钟|秒|小时|天)前))[^\\d]*?");
+					Matcher isDate = pattern.matcher(text);
+					if(isDate.matches()){
+						isContainDate = true;
+					}
+    			}else{
+    				isOnlyNumeric = false;
+    				isContainDate = false;
     			}
     			System.out.println(textNum + " " + linkNum + " " + longestTextSize + " " + isOnlyNumeric + " "
     					+ isContainDate + " " + titleContainDate + " " + classAttr);
@@ -706,22 +724,31 @@ public class PageAnalysis {
     private EntityNode getElementNodeTextSeq(ElementNode eNode){
         List<TextNode> eNodeTextSeq = null;
         if(eNode.getNodes() != null){
-            eNodeTextSeq = new ArrayList<>();
+            eNodeTextSeq = new LinkedList<>();
             for(Node node : eNode.getNodes()){
                 eNodeTextSeq.addAll(getNodeTexSeq(node, node.isIsAllHave()));
             }
         }
-        for(TextNode tn : eNodeTextSeq){
-        	for(int i=0; i<tn.getTextNodeUnit().size()-1; i++){
-        		if(tn.getTextNodeUnit().get(i).getTag().getName().equals("a") && 
-        				tn.getTextNodeUnit().get(i).getText().equals("") && 
-        				!tn.getTextNodeUnit().get(i+1).getText().equals("")){
-        			tn.getTextNodeUnit().get(i).setText(tn.getTextNodeUnit().get(i+1).getText());
-        			tn.getTextNodeUnit().get(i).getAttributes().addAll(tn.getTextNodeUnit().get(i+1).getAttributes());
-        			tn.getTextNodeUnit().remove(i+1);
-        		}
+        for(int j=0; j<eNodeTextSeq.size(); ){
+        	TextNode tn = eNodeTextSeq.get(j);
+        	if(tn.getTextNodeUnit().isEmpty()){
+        		eNodeTextSeq.remove(j);
+        	}else{
+        		for(int i=0; i<tn.getTextNodeUnit().size()-1; i++){
+            		if(tn.getTextNodeUnit().get(i).getTag().getName().equals("a") && 
+            				tn.getTextNodeUnit().get(i).getText().equals("") && 
+            				!tn.getTextNodeUnit().get(i+1).getText().equals("")){
+            			tn.getTextNodeUnit().get(i).setText(tn.getTextNodeUnit().get(i+1).getText());
+            			tn.getTextNodeUnit().get(i).getAttributes().addAll(tn.getTextNodeUnit().get(i+1).getAttributes());
+            			tn.getTextNodeUnit().remove(i+1);
+            		}
+            	}
+        		j++;
         	}
         }
+//        for(TextNode tn : eNodeTextSeq){
+//        	
+//        }
         EntityNode entityNode = new EntityNode();
         entityNode.setEntityUnit(eNodeTextSeq);
         return entityNode;
@@ -729,7 +756,7 @@ public class PageAnalysis {
     
     
     private List<TextNode> getNodeTexSeq(Node node, boolean isAlign){
-        List<TextNode> nodeTextSeq = new ArrayList<>();
+        List<TextNode> nodeTextSeq = new LinkedList<>();
         List<TextNodeUnit> tnuList = new LinkedList<>();
         TextNode tN = new TextNode();
         if(!node.getTextNodeUnit().getText().trim().equals("") || (node.isIsAllHave() && node.getChildNode() == null) /*|| node.isHasOwnIndividualChild()*/){
@@ -738,7 +765,8 @@ public class PageAnalysis {
             nodeTextSeq.add(tN);
         }
         if(node.getChildNode() != null){
-            for(Node childNode : node.getChildNode()){
+        	for(int i=0; i<node.getChildNode().size(); i++){
+        		Node childNode = node.getChildNode().get(i);
                 if(isAlign && !childNode.isIsAllHave()){
                     Stack nodeList = new Stack();
 //                	List<Node> nodeList = new LinkedList<>();
@@ -753,23 +781,52 @@ public class PageAnalysis {
                         }
                         if(qNode.getChildNode() != null){
                         	int size = qNode.getChildNode().size();
-                        	for(int i=0; i<size; i++){
-                        		nodeList.push(qNode.getChildNode().get(size-i-1));
+                        	for(int j=0; j<size; j++){
+                        		nodeList.push(qNode.getChildNode().get(size-j-1));
                         	}
                         }
 //                        nodeList.remove(0);
                     }
-                    tnuList.addAll(tnuChildList);
-                    
-                    if(!tnuList.isEmpty()){
-                        int index = nodeTextSeq.indexOf(tN);
-                        if(index != -1){
-                            nodeTextSeq.get(index).setTextNodeUnit(tnuList);
-                        }else{
-                            tN.setTextNodeUnit(tnuList);
-                            nodeTextSeq.add(tN);
-                        }
+                    if(i != 0){
+                    	nodeTextSeq.get(nodeTextSeq.size()-1).addAllTextNodeUnit(tnuChildList);
+                    }else{
+                    	int index = nodeTextSeq.indexOf(tN);
+                    	if(index != -1){
+                    		nodeTextSeq.get(index).addAllTextNodeUnit(tnuChildList);
+                    	}else{
+                    		tN.setTextNodeUnit(tnuChildList);
+                    		nodeTextSeq.add(tN);
+                    	}
                     }
+//                    if(!tnuChildList.isEmpty()){
+//                    	tnuList.addAll(tnuChildList);
+//                    	int index = nodeTextSeq.indexOf(tN);
+//                    	if(index != -1){
+//                            nodeTextSeq.get(index).setTextNodeUnit(tnuList);
+//                        }else{
+//                        	if(!nodeTextSeq.isEmpty()){
+//                        		nodeTextSeq.get(nodeTextSeq.size()-1).addAllTextNodeUnit(tnuList);
+//                        	}else{
+//                        		tN.setTextNodeUnit(tnuList);
+//                        		nodeTextSeq.add(tN);
+//                        	}
+//                        }
+//                    }else if(node.isIsAllHave() && nodeTextSeq.indexOf(tN) == -1){
+//                    	tnuList.add(node.getTextNodeUnit());
+//                        tN.setTextNodeUnit(tnuList);
+//                        nodeTextSeq.add(tN);
+//                    }
+//                    tnuList.addAll(tnuChildList);
+                    
+//                    if(!tnuList.isEmpty()){
+//                        int index = nodeTextSeq.indexOf(tN);
+//                        if(index != -1){
+//                            nodeTextSeq.get(index).setTextNodeUnit(tnuList);
+//                        }else{
+//                            tN.setTextNodeUnit(tnuList);
+//                            nodeTextSeq.add(tN);
+//                        }
+//                    }
                 }else{
                     nodeTextSeq.addAll(getNodeTexSeq(childNode, isAlign));
                 }

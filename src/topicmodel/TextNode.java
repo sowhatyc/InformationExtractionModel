@@ -4,6 +4,7 @@
  */
 package topicmodel;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -25,5 +26,12 @@ public class TextNode {
      */
     public void setTextNodeUnit(List<TextNodeUnit> textNode) {
         this.textNode = textNode;
+    }
+    
+    public void addAllTextNodeUnit(List<TextNodeUnit> tnuList){
+    	if(textNode == null){
+    		textNode = new LinkedList<TextNodeUnit>();
+    	}
+    	textNode.addAll(tnuList);
     }
 }

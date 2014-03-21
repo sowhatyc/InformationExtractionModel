@@ -15,7 +15,7 @@ public class StaticLib {
     
     public static Set<String> tagSet = null;
     
-    public static String extractorRulesPath = "extractorRulesCpy.xml";
+    public static String extractorRulesPath = "extractorRulesCpy_1.xml";
     
     public static void initialTagSet(){
         tagSet = new HashSet<String>();
