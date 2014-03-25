@@ -195,7 +195,7 @@ public class PageAnalysis {
                 entryEles = new Elements();
                 for(; j<childEles.size(); j++){
                     if(childEles.get(j).tag().formatAsBlock() || StaticLib.tagSet.contains(childEles.get(j).tagName())){
-                        String eleAttr = getVerifiedSequence(childEles.get(j), 1, true, false);
+                        String eleAttr = getVerifiedSequence(childEles.get(j), 1, false, false);
                         if(eleAttr == null){
                             continue;
                         }
@@ -510,7 +510,7 @@ public class PageAnalysis {
             emptyNodeNum++;
             startIndex = findIndex + 5;
         }
-        if(emptyNodeNum >= element.children().size()){
+        if(element.children().size() != 0 && emptyNodeNum >= element.children().size()){
             return null;
         }else{
             return sequence.replaceAll("@null", "");
@@ -620,6 +620,7 @@ public class PageAnalysis {
     		return;
     	}
     	for(EntityNode entity : entityList){
+    		boolean alreadyContainDate = false;
     		for(TextNode tn : entity.getEntityUnit()){
     			int textNum = 0;
         		int linkNum = 0;
@@ -627,6 +628,7 @@ public class PageAnalysis {
         		boolean isOnlyNumeric = true;
         		boolean isContainDate = false;
         		boolean titleContainDate = false;
+        		boolean firstDate = false;
         		String classAttr = "";
         		String text = "";
     			for(TextNodeUnit tnu : tn.getTextNodeUnit()){
@@ -657,22 +659,26 @@ public class PageAnalysis {
     				classAttr = "none";
     			}
     			if(!text.equals("")){
-    				Pattern pattern = Pattern.compile("^/?\\d[0-9/:-]*$");
+    				Pattern pattern = Pattern.compile("^/?\\d[0-9/\\s]*$");
     				Matcher isNum = pattern.matcher(text);
 					if(!isNum.matches()){
 						isOnlyNumeric = false;
 					}
-					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}(-|/|:)\\d{1,2})|((分钟|秒|小时|天)前))[^\\d]*?");
+					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}\\s?(-|/|:)\\s?\\d{1,2})|((分钟|秒|小时|天|月)前))[^\\d]*?");
 					Matcher isDate = pattern.matcher(text);
 					if(isDate.matches()){
 						isContainDate = true;
+						if(!alreadyContainDate){
+							firstDate = true;
+							alreadyContainDate = true;
+						}
 					}
     			}else{
     				isOnlyNumeric = false;
     				isContainDate = false;
     			}
     			System.out.println(textNum + " " + linkNum + " " + longestTextSize + " " + isOnlyNumeric + " "
-    					+ isContainDate + " " + titleContainDate + " " + classAttr);
+    					+ isContainDate + " " + titleContainDate + " " + firstDate + " " + classAttr);
     		}
     		System.out.println();
     	}
@@ -794,7 +800,9 @@ public class PageAnalysis {
                     	if(index != -1){
                     		nodeTextSeq.get(index).addAllTextNodeUnit(tnuChildList);
                     	}else{
-                    		tN.setTextNodeUnit(tnuChildList);
+                    		tnuList.add(node.getTextNodeUnit());
+                    		tnuList.addAll(tnuChildList);
+                    		tN.setTextNodeUnit(tnuList);
                     		nodeTextSeq.add(tN);
                     	}
                     }

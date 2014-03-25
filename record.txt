@@ -1,0 +1,528 @@
+文本的个数  是否是纯数字  最长文本的长度  链接的个数  是否包含日期 title内容是否包含日期  class内容 第一次出现日期
+
+NonInfo: 没有信息量
+Title: 标题
+Author: 作者
+VandC: 访问和回复
+AuthorDate: 发帖日期
+ReplyAandD: 回复作者和时间
+
+//tianya
+//train
+0 0 0 false false false false face OtherInfo
+1 1 4 false false false false none Title
+1 1 9 false false false false author Author
+1 0 4 true false false false none VandC
+1 0 3 true false falsefalse  none VandC
+1 0 11 false true true true none AuthorDate
+
+//train
+0 0 0 false false false false face OtherInfo
+1 1 20 false false false false none Title
+1 1 5 false false false false author Author
+1 0 4 true false false false none VandC
+1 0 3 true false false false none VandC
+1 0 11 false true true true none AuthorDate
+
+//train
+0 0 0 false false false false face OtherInfo
+1 1 20 false false false false none Title
+1 1 7 false false false false author Author
+1 0 2 true false false false none VandC
+1 0 2 true false false false none VandC
+1 0 11 false true true true none AuthorDate
+
+//test
+0 0 0 false false false false face OtherInfo
+1 1 16 false false false false none Title
+1 1 5 false false false false author Author
+1 0 1 true false false false none VandC
+1 0 1 true false false false none VandC
+1 0 11 false true true true none AuthorDate
+
+//test
+0 0 0 false false false false face OtherInfo
+1 1 14 false false false false none Title
+1 1 4 false false false false author Author
+1 0 1 true false false false none VandC
+1 0 1 true false false false none VandC
+1 0 11 false true true true none AuthorDate
+
+//gfan
+//train
+0 1 0 false false false false none OtherInfo
+6 5 30 false false false false common Title
+1 1 3 false false false false none Author
+1 0 4 false true false true none AuthorDate
+1 1 3 true false false false xi2 VandC
+1 0 5 true false false false none VandC
+1 1 10 false false false false none ReplyA
+1 1 7 false true true false none ReplyD
+//train
+0 1 0 false false false false none OtherInfo
+11 9 37 false false false false new Title
+1 1 5 false false false false none Author
+1 0 4 false true true true none AuthorDate
+1 1 3 true false false false xi2 VandC
+1 0 4 true false false false none VandC
+1 1 7 false false false false none ReplyA
+1 1 4 false true true false none ReplyD
+
+
+//tieba
+//train
+1 0 3 true false false false threadlist_rep_num VandC
+1 1 24 false false false false j_th_tit Title
+0 0 0 false false false false none OtherInfo
+1 1 10 false false false false tb_icon_author Author
+1 2 3 false false false false threadlist_absthreadlist_abs_onlyline OtherInfo
+1 1 5 false false false false tb_icon_author_relyj_replyer ReplyA
+1 0 5 false true false true threadlist_reply_datej_reply_data ReplyD
+0 0 0 false false false false clear OtherInfo
+
+//train
+1 0 2 true false false false threadlist_rep_num VandC
+1 1 29 false false false false j_th_tit Title
+0 0 0 false false false false none OtherInfo
+1 1 5 false false false false tb_icon_author Author
+2 2 73 false false false false threadlist_absthreadlist_abs_onlyline OtherInfo
+1 1 5 false false false false tb_icon_author_relyj_replyer ReplyA
+1 0 5 false true false true threadlist_reply_datej_reply_data ReplyD 
+0 0 0 false false false false clear OtherInfo
+
+//test
+1 0 4 true false false false threadlist_rep_num VandC
+1 1 22 false false false false j_th_tit Title
+0 0 0 false false false false none OtherInfo
+1 1 4 false false false false tb_icon_author Author
+1 2 8 false false false false threadlist_absthreadlist_abs_onlyline OtherInfo
+1 1 4 false false false false tb_icon_author_relyj_replyer ReplyA
+1 0 5 false true false true threadlist_reply_datej_reply_data ReplyD
+0 0 0 false false false false clear OtherInfo
+
+
+//mop
+//train
+1 0 1 false false false false titlegreentieStyle_bmZD4 OtherInfo
+1 1 12 false false false false none Title
+1 0 3 false false false false add OtherInfo
+1 1 8 false false false false none Author
+2 0 5 true false false false none VandC
+1 0 19 false true false true time ReplyD
+
+//train
+1 0 1 false false false false hot2titletieStyle_zhanZD1 OtherInfo
+1 1 23 false false false false none Title
+1 0 3 false false false false add OtherInfo
+1 1 6 false false false false none Author
+3 0 5 true false false false none VandC
+1 0 19 false true false true time ReplyD
+
+//train
+1 0 1 false false false false cblacktitle OtherInfo
+1 1 21 false false false false none Title
+0 0 0 false false false false add OtherInfo
+1 1 7 false false false false none Author
+1 0 3 true true false false none VandC
+1 0 19 false true false true time ReplyD
+
+//test
+1 0 1 false false false false hottitletieStyle_zhanZD1 OtherInfo
+1 1 23 false false false false none Title
+1 0 3 false false false false add OtherInfo
+1 1 4 false false false false none Author
+2 0 5 true false false false none VandC
+1 0 19 false true false true time ReplyD
+
+//test
+1 0 1 false false false false hottitletieStyle_zhanZD1 OtherInfo
+1 1 23 false false false false none Title
+0 0 0 true false false false add OtherInfo
+1 1 8 false false false false none Author
+3 0 5 true false false false none VandC
+1 0 19 false true false true time ReplyD
+
+//xitek
+//train
+0 1 0 false false false false none OtherInfo
+4 4 20 false false false false new Title
+1 1 8 false false false false by1xi2 Author
+1 0 1 true false false false num1xi2 VandC
+1 0 2 true false false false num2xi2 VandC
+1 1 8 false false false false none ReplyA
+1 0 10 false true false true none ReplyD
+
+
+//test
+0 1 0 false false false false none OtherInfo
+1 1 23 false false false false new Title
+1 1 4 false false false false by1xi2 Author
+1 0 2 true false false false num1xi2 VandC
+1 0 4 true false false false num2xi2 VandC
+1 1 4 false false false false none ReplyA
+1 0 9 false true false true none ReplyD
+
+//train
+0 1 0 false false false false none OtherInfo
+1 1 25 false false false false xst Title
+1 1 4 false false false false by1xi2 Author
+1 0 2 true false false false num1xi2 VandC
+1 0 5 true false false false num2xi2 VandC
+1 1 8 false false false false none ReplyA
+1 0 8 false true false true none ReplyD
+
+
+//test
+0 1 0 false false false false none OtherInfo
+1 1 26 false false false false xst Title
+1 1 6 false false false false by1xi2 Author
+1 0 2 true false false false num1xi2 VandC
+1 0 5 true false false false num2xi2 VandC
+1 1 3 false false false false none ReplyA
+1 0 9 false true false true none ReplyD
+
+
+//ifeng
+//test
+0 1 0 false false false false none OtherInfo
+1 1 19 false false false false common Title
+1 1 4 false false false false none Author
+1 0 9 false true false true none AuthorDate
+1 0 1 false false false false digit OtherInfo
+1 0 1 true false false false green VandC
+1 0 4 true false false false cRed VandC
+1 1 12 false false false false none ReplyA
+1 0 15 false true false false none ReplyD
+
+//test
+0 1 0 false false false false none OtherInfo
+1 1 13 false false false false common Title
+1 1 4 false false false false none Author
+1 0 9 false true false true none AuthorDate
+1 0 1 false false false false digit OtherInfo
+1 0 1 true false false false green VandC
+1 0 4 true false false false cRed VandC
+1 1 4 false false false false none ReplyA
+1 0 15 false true false false none ReplyD
+
+//sina
+//test
+
+0 1 0 false false false false none OtherInfo
+0 0 0 false false false false icon OtherInfo
+0 0 0 false false false false none OtherInfo
+7 7 18 false false false false new Title
+1 1 3 false false false false none Author
+1 0 9 false true false true none AuthorDate
+1 0 1 false false false false nums OtherInfo
+1 0 2 true false false false none VandC
+1 0 5 true false false false none VandC
+1 1 15 false true false false none ReplyD
+1 0 2 false false false false none OtherInfo
+1 1 4 false false false false none ReplyA
+
+
+//test
+0 1 0 false false false false none OtherInfo
+0 0 0 false false false false icon OtherInfo
+0 0 0 false false false false none OtherInfo
+10 9 22 false false false false threadpages Title
+1 1 6 false false false false none Author
+1 0 8 false true false true none AuthorDate
+1 0 1 false false false false nums OtherInfo
+1 0 4 true false false false none VandC
+1 0 7 true false false false none VandC
+1 1 15 false true false false none ReplyD
+1 0 2 false false false false none OtherInfo
+1 1 3 false false false false none ReplyA
+
+
+
+
+//kdnet
+//train
+0 1 0 false false false false none OtherInfo
+0 1 0 false false false false subject OtherInfo
+2 2 21 false false true false none Title
+1 1 4 false false false false none Author
+1 0 9 true false false false statisticsclearfix VandC
+1 0 17 false true false true lastupdate ReplyD
+1 1 6 false false false false none ReplyA
+
+//train
+0 1 0 false false false false none OtherInfo
+0 1 0 false false false false subject OtherInfo
+1 1 18 false false true false none Title
+1 1 2 false false false false none Author
+1 0 7 true false false false statistisclearfix VandC
+1 0 17 false true false true lastupdate ReplyD
+1 1 2 false false false false none ReplyA
+
+//test
+0 1 0 false false false false none OtherInfo
+0 1 0 false false false false subject OtherInfo
+1 1 18 false false true false none Title
+1 1 6 false false false false none Author
+1 0 5 true true false false statisticsclearfix VandC
+1 0 17 false true false true lastupdate ReplyD
+1 1 9 true false false false none ReplyA
+
+
+//pop
+//train
+7 6 20 false false false false icn Title
+2 1 9 false true false true by AuthorAndDate
+2 1 4 true false false false num VandC
+2 2 8 false true true false by ReplyAandD
+//train
+6 5 21 false false false false icn Title
+2 1 9 false true false true by AuthorAndDate
+2 1 3 true false false false num VandC
+2 2 4 false true true false by ReplyAandD
+
+
+//163
+//train
+1 2 20 false false false false board-list-title-inner Title
+1 1 6 false false false false none Author
+1 0 11 false true false true date AuthorDate
+2 0 6 true false false false board-list-count-inner VandC
+2 1 12 false true false false board-list-reply ReplyAandD
+
+//test
+1 2 17 false false false false board-list-title-inner Title
+1 1 4 false false false false none Author
+1 0 11 false true false true date AuthorDate
+2 0 4 true false false false board-list-count-inner VandC
+2 1 11 false true false false board-list-reply ReplyAandD
+
+
+//train
+2 2 20 false false false false board-list-title-inner Title
+1 1 3 false false false false none Author
+1 0 11 false true false true date AuthorDate
+2 0 4 true false false false board-list-count-inner VandC
+2 1 12 false true false false board-list-reply ReplyAandD
+
+
+//test
+2 3 17 false false false false board-list-title-inner Title
+1 1 4 false false false false none Author
+1 0 11 false true false true date AuthorDate
+2 0 4 true false false false board-list-count-inner VandC
+2 1 11 false true false false board-list-reply ReplyAandD
+
+//anzhi
+//test
+
+0 1 0 false false false false none OtherInfo
+8 7 15 false false false false common Title
+1 1 5 false false false false none Author
+1 0 9 false true false true none AuthorDate
+1 1 2 true false false false xi2 VandC
+1 0 4 true false false false none VandC
+1 1 7 false false false false none ReplyA
+1 1 4 false true true false none ReplyD
+
+//test
+0 1 0 false false false false none OtherInfo
+4 3 19 false false false false new Title
+1 1 9 true false false false none Author
+1 0 7 false true true true none AuthorDate
+1 1 1 true false false false xi2 VandC
+1 0 3 true false false false none VandC
+1 1 14 false false false false none ReplyA
+1 1 4 false true true false none ReplyD
+
+//taobao
+//test
+1 1 30 false false false false subject Title
+2 1 10 false true false true later AuthorAndDate
+3 0 7 true false false false score VandC
+2 1 7 false true false false last ReplyAandD
+//test
+1 1 11 false false false false subject Title
+2 1 11 false true false true later AuthorAndDate
+3 0 2 true false false false score VandC
+0 0 0 false false false false last OtherInfo
+
+//qq
+//test
+0 1 0 false false false false none OtherInfo
+1 1 25 false false false false common Title
+1 1 3 false false false false none Author
+1 0 8 false true false true none AuthorDate
+1 1 1 true false false false xi2 VandC
+1 0 5 true false false false none VandC
+1 1 3 false false false false none ReplyA
+1 0 7 false true true false none ReplyD
+//test
+0 1 0 false false false false none OtherInfo
+8 7 16 false false false false new Title
+1 1 6 false false false false none Author
+1 0 9 false true false true none AuthorDate
+1 1 2 true false false false xi2 VandC
+1 0 5 true false false false none VandC
+1 1 4 false false false false none ReplyA
+1 0 4 false true true false none ReplyD
+
+//meizu
+//train
+0 1 0 false false false false none OtherInfo
+0 0 0 false false false false shadowbox_avatar OtherInfo
+5 4 19 false false false false maincont_list Title
+1 1 4 false false false false author_list Author
+0 0 0 false false false false none OtherInfo
+1 0 4 false true true true none AuthorDate
+//train
+0 1 0 false false false false none OtherInfo
+0 0 0 false false false false shadowbox_avatar OtherInfo
+5 4 34 false false false false maincont_list Title
+1 1 13 false false false false author_list Author
+0 0 0 false false false false none OtherInfo
+1 0 4 false true true true none AuthorDate
+
+//hbvhbv
+//test
+8 7 24 false false false false icn Title
+1 1 3 false false false false none Author
+1 0 9 false true false true none AuthorDate
+2 1 5 true false false false num VandC
+2 2 15 false true false false by ReplyAandD
+
+//soufun
+//test
+1 0 2 false false false false btl01 OtherInfo
+2 2 15 false false false false none Title
+1 1 5 false false false false btl02 Author
+1 0 7 true false false false btl03 VandC
+1 0 10 false true false true btl03 AuthorDate
+
+//55bbs
+//test
+0 1 0 false false false false folder OtherInfo
+10 9 20 false false false false hot Title
+2 1 10 false true false true author AuthorAndDate
+3 0 6 true false false false nums VandC
+3 2 15 false true false false lastpost ReplyAndDate
+
+//test
+0 1 0 false false false false folder OtherInfo
+2 2 24 false false false false new Title
+2 1 9 false true false true author AuthorAndDate
+3 0 4 true false false false nums VandC
+3 2 15 false true false false lastpost ReplyAndDate
+
+//1lou
+//train
+2 2 20 false false false false iconicon-top-1 Title
+1 1 5 false false false false ajaxdialog Author
+0 0 0 false false false false none OtherInfo
+1 0 3 false true false true smallgrey2 AuthorDate
+1 1 5 false false false false ajaxdialog ReplyA
+0 0 0 false false false false none OtherInfo
+1 0 3 false true false false smallgrey2 ReplyD
+1 0 4 true false false false smallgrey VandC
+0 0 0 false false false false smallgreyviews OtherInfo
+0 0 0 false false false false none OtherInfo
+
+//test
+3 3 41 false false false false iconicon-top-3 Title
+1 1 5 false false false false ajaxdialog Author
+0 0 0 false false false false none OtherInfo
+1 0 3 false true false true smallgrey2 AuthorDate
+1 1 3 false false false false ajaxdialog ReplyA
+0 0 0 false false false false none OtherInfo
+1 0 4 false true false false smallgrey2 ReplyD
+1 0 5 true false false false smallgrey VandC
+0 0 0 false false false false smallgreyviews OtherInfo
+0 0 0 false false false false none OtherInfo
+
+//train
+4 4 39 false false false false iconicon-post-blue Title
+1 1 6 false false false false ajaxdialog Author
+0 0 0 false false false false none OtherInfo
+1 0 5 false true false true smallnew AuthorDate
+1 1 7 false false false false ajaxdialog ReplyA
+0 0 0 false false false false none OtherInfo
+1 0 5 false true false false smallgrey2 ReplyD
+1 0 3 true false false false smallgrey VandC
+0 0 0 false false false false smallgreyviews OtherInfo
+0 0 0 false false false false none OtherInfo
+
+//test
+4 4 62 false false false false iconicon-post-grey Title
+1 1 10 false false false false ajaxdialog Author
+0 0 0 false false false false none OtherInfo
+1 0 3 false true false true smallgrey2 AuthorDate
+1 1 5 false false false false ajaxdialog ReplyA
+0 0 0 false false false false none OtherInfo
+1 0 4 false true false false smallgrey2 ReplyD
+1 0 4 true false false false smallgrey VandC
+0 0 0 false false false false smallgreyviews OtherInfo
+0 0 0 false false false false none OtherInfo
+
+//fengniao
+//train
+0 1 0 false false false false icn OtherInfo
+7 5 46 false false false false commontotalTop Title
+1 1 7 false false false false author Author
+1 0 2 true false false false reply VandC
+1 0 4 true false false false popular VandC
+1 0 1 true false false false grade OtherInfo
+2 1 10 false true false true last ReplyAandD
+
+//test
+0 1 0 false false false false icn OtherInfo
+6 4 10 false false false false commontotalTop Title
+1 1 4 false false false false author Author
+1 0 2 true false false false reply VandC
+1 0 4 true false false false popular VandC
+1 0 1 true false false false grade OtherInfo
+2 1 10 false true false true last ReplyAandD
+
+//test
+0 1 0 false false false false icn OtherInfo
+2 1 12 false false false false common Title
+1 1 6 false false false false author Author
+1 0 1 true false false false reply VandC
+1 0 3 true false false false popular VandC
+1 0 1 true false false false grade OtherInfo
+2 1 10 false true false true last ReplyAandD
+
+//mydrivers
+//test
+3 4 15 false false false false icn Title
+2 1 6 false true true true by AuthorAndDate
+2 1 2 true false false false num VandC
+2 2 6 false true true false by ReplyAandD
+
+
+//test
+2 3 15 false false false false icn Title
+2 1 9 false true false true by AuthorAndDate
+2 1 3 true false false false num VandC
+2 2 15 false true true false by ReplyAandD
+
+//rayli
+//test
+0 1 0 false false false false none OtherInfo
+6 5 37 false false false false new Title
+0 0 0 false false false false none OtherInfo
+1 1 6 false false false false none Author
+1 0 8 false true false true none AuthorDate
+1 0 3 true false false false num VandC
+1 0 5 true false false false none VandC
+1 1 7 false false false false none ReplyA
+1 1 15 false true false false none ReplyD
+
+//test
+0 1 0 false false false false none OtherInfo
+7 6 20 false false false false new Title
+0 0 0 false false false false none OtherInfo
+1 1 6 false false false false none Author
+1 0 9 false true false true none AuthorDate
+1 0 2 true false false false num VandC
+1 0 5 true false false false none VandC
+1 1 11 false false false false none ReplyA
+1 1 15 false true false false none ReplyD

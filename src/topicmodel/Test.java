@@ -67,7 +67,14 @@ public class Test {
 //    	 			String url = "http://pop.pcpop.com/forum-2-1.html";
 //    				String url = "http://bbs.taobao.com/catalog/424015----1.htm?spm=0.0.0.0.8TuYtx#ThreadList";
 //    				String url = "http://club.auto.qq.com/f-16-1.htm";
-    				String url = "http://bbs.meizu.cn/forum-22-1.html";
+//    				String url = "http://bbs.meizu.cn/forum-22-1.html";
+//    				String url = "http://www.hbvhbv.info/forum/forum-27-1.html";
+//    				String url = "http://bbs.soufun.com/asp/index/focusList.aspx";
+//    				String url = "http://bbs.55bbs.com/forum-7-1.html";
+//    				String url = "http://bbs.1lou.com/forum-index-fid-951.htm";
+//    				String url = "http://newbbs.fengniao.com/forum_65.html";
+//    				String url = "http://bbs.mydrivers.com/forum-92-1.html";
+    				String url = "http://bbs.rayli.com.cn/forum-19-1.html";
 //    		String url = "http://forum.xitek.com/thread-1255673-1-1-1.html";
 //        String url = "http://bbs.dospy.com/thread-15727296-1-741-1.html";
                     String retVal[] = new WebCrawler().getContent(url);
@@ -212,9 +219,9 @@ public class Test {
         List<List<String>> entrys = pa.displayElementTextList(elementTextList);
         int count = 0;
         for(List<String> entry : entrys){
-        	if(count++ > 19){
-        		break;
-        	}
+//        	if(count++ > 30){
+//        		break;
+//        	}
             System.out.println("*******************************");
             int num = 0;
             for(String str : entry){
