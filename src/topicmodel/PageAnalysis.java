@@ -173,7 +173,7 @@ public class PageAnalysis {
                         eleAttr = eleAttr.substring(0, eleAttr.indexOf("</")-1);
                         
                         if(eleAttr.equals(fea.getStartElementsInfo().get(0)) && 
-                        		ele.getAllElements().size() >= fea.getRepeatElementSize()){
+                        		ele.children().size() >= fea.getRepeatElementSize()){
                         	entryEles = new Elements();
                         	entryEles.add(ele);
                         	elementsList.add(entryEles); 
@@ -341,13 +341,15 @@ public class PageAnalysis {
             Element eleParent = eleList.get(0).parent();
             while(eleParent != null && eleParent != root){
                 if(feMap.containsKey(eleParent)){
-                    if((eleList.size() < feMap.get(eleParent).getContinualNum() && feMap.get(eleList.get(0)).getContinualNum() * feMap.get(eleList.get(0)).getRepeatElementSize()
-                            < feMap.get(eleParent).getContinualNum() * feMap.get(eleParent).getRepeatElementSize())|| feMap.get(eleParent).getComponentSize() != 1){
+                	String parentSeq = getVerifiedSequence(eleParent, 2, false, false);
+                    if((eleList.size() * feMap.get(eleList.get(0)).getContinualNum() < seqEleMap.get(parentSeq).size() * feMap.get(eleParent).getContinualNum() 
+                    		&& eleList.size() * feMap.get(eleList.get(0)).getContinualNum() * eleList.get(0).getAllElements().size()
+                            < seqEleMap.get(parentSeq).size() * feMap.get(eleParent).getContinualNum() * eleParent.getAllElements().size())
+                            || feMap.get(eleParent).getComponentSize() != 1){
                         for(Element ele : eleList){
                             feMap.remove(ele);
                         }
                     }else{
-                        String parentSeq = getVerifiedSequence(eleParent, 2, false, false);
                         sequenceDone.add(parentSeq);
                         feMap.remove(eleParent);
                     }
@@ -450,7 +452,7 @@ public class PageAnalysis {
                             for(int k=currentIndex; k<currentIndex+componetSize; k++){
                                 String info = "";
                                 Element eleInfo = childElements.get(k);
-                                repeatElementSizeCpy += eleInfo.getAllElements().size();
+                                repeatElementSizeCpy += eleInfo.children().size();
                                 info = "@" + eleInfo.tagName();
 //                                for(Attribute attr : eleInfo.attributes()){
 //                                    info += " " + attr.getKey();

@@ -45,7 +45,7 @@ import org.jsoup.select.Elements;
 public class Test {
     
     public static void main(String args[]){
-    	//百度贴吧正文无法处理，搜狐论坛无法处理（javascript）
+    	//mop楼主无法抽出,soufun编码方式不对,55bbs对齐为一个
             //        System.out.println(new WebCrawler().getContent("http://bbs.tianya.cn/list-develop-1.shtml"));
             //        System.out.println(new WebCrawler().getContentMethod2("http://bbs.tianya.cn/list-develop-1.shtml"));
 //                    String url = "http://bbs.tianya.cn/list-828-1.shtml";
@@ -59,24 +59,39 @@ public class Test {
 //                    String url = "http://bbs.anzhi.com/forum-1020-1.html";
 //                    String url = "http://www.smzdm.com/";
 //                    String url = "http://forum.xitek.com/forum-2-1.html";
+//    				String url = "http://forum.xitek.com/thread-1284457-1-1-1.html";
 //                    String url = "http://tt.mop.com/topic/list_1_8_0_0.html";
+//    				String url = "http://tt.mop.com/read_14764521_1_0.html";
 //                    String url = "http://bbs.ifeng.com/forumdisplay.php?fid=218";
+//    				String url = "http://bbs.ifeng.com/viewthread.php?tid=17327178&extra=page%3D1";
 //                    String url = "http://bbs.news.163.com/list/society.html";
+//    				String url = "http://bbs.news.163.com/bbs/society/391930141.html";
 //    				String url = "http://club.history.sina.com.cn/forum-51-1.html";
+//    				String url = "http://club.history.sina.com.cn/thread-5830958-1-1.html";
 //    				String url = "http://club.kdnet.net/list.asp?boardid=1";
+//    				String url = "http://club.kdnet.net/dispbbs.asp?id=9945001&boardid=1";
 //    	 			String url = "http://pop.pcpop.com/forum-2-1.html";
+//    				String url = "http://pop.pcpop.com/thread-6825685-1-1.html";
 //    				String url = "http://bbs.taobao.com/catalog/424015----1.htm?spm=0.0.0.0.8TuYtx#ThreadList";
+//    				String url = "http://bbs.taobao.com/catalog/thread/154521-266736309.htm?spm=0.0.0.0.AG7wQo";
 //    				String url = "http://club.auto.qq.com/f-16-1.htm";
+//    				String url = "http://club.auto.qq.com/t-650503-1.htm";
 //    				String url = "http://bbs.meizu.cn/forum-22-1.html";
+//    				String url = "http://bbs.meizu.cn/thread-4955381-1-1.html";
 //    				String url = "http://www.hbvhbv.info/forum/forum-27-1.html";
+//    				String url = "http://www.hbvhbv.info/forum/thread-1200391-1-1.html";
 //    				String url = "http://bbs.soufun.com/asp/index/focusList.aspx";
+//    				String url = "http://guoyuncun.soufun.com/bbs/1010739127~-1/104577646_104577646.htm";
 //    				String url = "http://bbs.55bbs.com/forum-7-1.html";
+//    				String url = "http://bbs.55bbs.com/thread-9067689-1-1.html";
 //    				String url = "http://bbs.1lou.com/forum-index-fid-951.htm";
+//    				String url = "http://bbs.1lou.com/thread-index-fid-951-tid-4159105.htm";
 //    				String url = "http://newbbs.fengniao.com/forum_65.html";
+//    				String url = "http://newbbs.fengniao.com/3198414.html";
 //    				String url = "http://bbs.mydrivers.com/forum-92-1.html";
+//    				String url = "http://bbs.mydrivers.com/thread-300812-1-1.html";
     				String url = "http://bbs.rayli.com.cn/forum-19-1.html";
-//    		String url = "http://forum.xitek.com/thread-1255673-1-1-1.html";
-//        String url = "http://bbs.dospy.com/thread-15727296-1-741-1.html";
+//    				String url = "http://bbs.rayli.com.cn/thread-51899708-1-1.html";
                     String retVal[] = new WebCrawler().getContent(url);
                     PageAnalysis pa = new PageAnalysis();
 //                    StringBuffer sb = new StringBuffer();
@@ -219,9 +234,9 @@ public class Test {
         List<List<String>> entrys = pa.displayElementTextList(elementTextList);
         int count = 0;
         for(List<String> entry : entrys){
-//        	if(count++ > 30){
-//        		break;
-//        	}
+        	if(count++ > 30){
+        		break;
+        	}
             System.out.println("*******************************");
             int num = 0;
             for(String str : entry){
@@ -230,8 +245,8 @@ public class Test {
             }
         }
         
-        System.out.print("\n\n\n");
-        pa.getFeatures(elementTextList);
+//        System.out.print("\n\n\n");
+//        pa.getFeatures(elementTextList);
         
 //        Map<String, ArrayList<Element>> minimalGeneralSeq = pa.getMinimalGeneralizationSeq(elesList);
 //        Iterator<String> iter = minimalGeneralSeq.keySet().iterator();
