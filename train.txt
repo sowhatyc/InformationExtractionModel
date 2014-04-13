@@ -1,181 +1,150 @@
-0 0 0 false false false false face OtherInfo
-1 1 4 false false false false none Title
-1 1 9 false false false false author Author
-1 0 4 true false false false none VandC
-1 0 3 true false false false  none VandC
-1 0 11 false true true true none AuthorDate
+1 1 30 false false false 0 0 true none Title
+1 1 9 false false false 0 0 true author Author
+1 0 3 true false false 0 1 false none VandC
+1 0 3 true false false 0 2 false none VandC
+1 0 11 false true true 1 0 false none AuthorDate
 
-0 0 0 false false false false face OtherInfo
-1 1 20 false false false false none Title
-1 1 5 false false false false author Author
-1 0 4 true false false false none VandC
-1 0 3 true false false false none VandC
-1 0 11 false true true true none AuthorDate
+1 1 21 false false false 0 0 true none Title
+1 1 9 false false false 0 0 true author Author
+1 0 3 true false false 0 1 false none VandC
+1 0 2 true false false 0 2 false none VandC
+1 0 11 false true true 1 0 false none AuthorDate
 
-0 0 0 false false false false face OtherInfo
-1 1 20 false false false false none Title
-1 1 7 false false false false author Author
-1 0 2 true false false false none VandC
-1 0 2 true false false false none VandC
-1 0 11 false true true true none AuthorDate
+1 1 12 false false false 0 0 true none Title
+1 1 4 false false false 0 0 true author Author
+1 0 4 true false false 0 1 false none VandC
+1 0 3 true false false 0 2 false none VandC
+1 0 11 false true true 1 0 false none AuthorDate
 
-0 1 0 false false false false none OtherInfo
-6 5 30 false false false false common Title
-1 1 9 true false false false none Author
-1 0 4 false true false true none AuthorDate
-1 1 3 true false false false xi2 VandC
-1 0 5 true false false false none VandC
-1 1 10 false false false false none ReplyA
-1 1 7 false true true false none ReplyD
+0 1 0 false false false 0 0 false none OtherInfo
+2 2 35 false false false 0 0 true common Title
+1 1 10 false false false 0 0 true none Author
+1 0 9 false true false 1 0 false none AuthorDate
+1 1 3 true false false 0 1 false xi2 VandC
+1 0 5 true false false 0 2 false none VandC
+1 1 10 false false false 0 0 true none ReplyA
+1 0 4 false true true 2 0 false none ReplyD
 
-0 1 0 false false false false none OtherInfo
-11 9 37 false false false false new Title
-1 1 5 false false false false none Author
-1 0 4 false true true true none AuthorDate
-1 1 3 true false false false xi2 VandC
-1 0 4 true false false false none VandC
-1 1 7 false false false false none ReplyA
-1 1 4 false true true false none ReplyD
+0 1 0 false false false 0 0 false none OtherInfo
+2 2 41 false false false 0 0 true new Title
+1 1 6 false false false 0 0 true none Author
+1 0 8 false true false 1 0 false none AuthorDate
+1 1 4 true false false 0 1 false xi2 VandC
+1 0 5 true false false 0 2 false none VandC
+1 1 9 false false false 0 0 true none ReplyA
+1 0 4 false true true 2 0 false none ReplyD
 
-1 0 3 true false false false threadlist_rep_num VandC
-1 1 24 false false false false j_th_tit Title
-0 0 0 false false false false none OtherInfo
-1 1 10 false false false false tb_icon_author Author
-1 2 3 false false false false threadlist_absthreadlist_abs_onlyline OtherInfo
-1 1 5 false false false false tb_icon_author_relyj_replyer ReplyA
-1 0 5 false true false true threadlist_reply_datej_reply_data ReplyD
-0 0 0 false false false false clear OtherInfo
+1 0 1 true false false 0 1 false threadlist_rep_num VandC
+1 1 20 false false false 0 0 true j_th_tit Title
+1 1 8 false false false 0 0 true tb_icon_author Author
+1 2 6 false false false 0 0 true threadlist_absthreadlist_abs_onlyline OtherInfo
+1 1 12 false false false 0 0 true j_user_card ReplyA
+1 0 5 false true false 1 0 false threadlist_reply_datej_reply_data ReplyD
 
-1 0 2 true false false false threadlist_rep_num VandC
-1 1 29 false false false false j_th_tit Title
-0 0 0 false false false false none OtherInfo
-1 1 5 false false false false tb_icon_author Author
-2 2 73 false false false false threadlist_absthreadlist_abs_onlyline OtherInfo
-1 1 5 false false false false tb_icon_author_relyj_replyer ReplyA
-1 0 5 false true false true threadlist_reply_datej_reply_data ReplyD 
-0 0 0 false false false false clear OtherInfo
+1 0 2 true false false 0 1 false threadlist_rep_num VandC
+1 1 4 false false false 0 0 true j_th_tit Title
+1 1 11 false false false 0 0 true tb_icon_author Author
+0 2 0 false false false 0 0 false threadlist_absthreadlist_abs_onlyline OtherInfo
+1 1 11 false false false 0 0 true j_user_card ReplyA
+1 0 5 false true false 1 0 false threadlist_reply_datej_reply_data ReplyD 
 
-1 0 1 false false false false titlegreentieStyle_bmZD4 OtherInfo
-1 1 12 false false false false none Title
-1 0 3 false false false false add OtherInfo
-1 1 8 false false false false none Author
-2 0 5 true false false false none VandC
-1 0 19 false true false true time ReplyD
+1 0 1 false false false 0 0 false titlegreentieStyle_bmZD4 OtherInfo
+1 1 13 false false false 0 0 true none Title
+1 1 4 false false false 0 0 true none Author
+2 0 5 true false false 0 1 false none VandC
+1 0 19 false true false 1 0 false time ReplyD
 
-1 0 1 false false false false hot2titletieStyle_zhanZD1 OtherInfo
-1 1 23 false false false false none Title
-1 0 3 false false false false add OtherInfo
-1 1 6 false false false false none Author
-3 0 5 true false false false none VandC
-1 0 19 false true false true time ReplyD
+1 0 1 false false false 0 0 false hot2titletieStyle_zhanZD1 OtherInfo
+1 1 20 false false false 0 0 true none Title
+1	0	3	false	false	false	0	0	false	add	OtherInfo
+1 1 5 false false false 0 0 true none Author
+2 0 6 true false false 0 1 false none VandC
+1 0 19 false true false 1 0 false time ReplyD
 
-1 0 1 false false false false cblacktitle OtherInfo
-1 1 21 false false false false none Title
-0 0 0 false false false false add OtherInfo
-1 1 7 false false false false none Author
-1 0 3 true true false false none VandC
-1 0 19 false true false true time ReplyD
+1 0 1 false false false 0 0 false cblacktitle OtherInfo
+1 1 19 false false false 0 0 true none Title
+1 1 4 false false false 0 0 true none Author
+2 0 5 true false false 0 1 false none VandC
+1 0 19 false true false 1 0 false time ReplyD
 
-0 1 0 false false false false none OtherInfo
-4 4 20 false false false false new Title
-1 1 8 false false false false by1xi2 Author
-1 0 1 true false false false num1xi2 VandC
-1 0 2 true false false false num2xi2 VandC
-1 1 8 false false false false none ReplyA
-1 0 10 false true false true none ReplyD
+0 1 0 false false false 0 0 false none OtherInfo
+2 2 11 false false false 0 0 true new Title
+1 1 6 false false false 0 0 true by1xi2 Author
+1 0 4 true false false 0 1 false num1xi2 VandC
+1 0 5 true false false 0 2 false num2xi2 VandC
+1 1 3 false false false 0 0 true none ReplyA
+1 0 10 false true false 1 0 false none ReplyD
 
-0 1 0 false false false false none OtherInfo
-1 1 25 false false false false xst Title
-1 1 4 false false false false by1xi2 Author
-1 0 2 true false false false num1xi2 VandC
-1 0 5 true false false false num2xi2 VandC
-1 1 8 false false false false none ReplyA
-1 0 8 false true false true none ReplyD
+0 1 0 false false false 0 0 false none OtherInfo
+1 1 9 false false false 0 0 true xst Title
+1 1 8 false false false 0 0 true by1xi2 Author
+1 0 2 true false false 0 1 false num1xi2 VandC
+1 0 3 true false false 0 2 false num2xi2 VandC
+1 1 8 false false false 0 0 true none ReplyA
+1 0 10 false true false 1 0 false none ReplyD
 
-0 1 0 false false false false none OtherInfo
-0 1 0 false false false false subject OtherInfo
-2 2 21 false false true false none Title
-1 1 4 false false false false none Author
-1 0 9 true false false false statisticsclearfix VandC
-1 0 17 false true false true lastupdate ReplyD
-1 1 6 false false false false none ReplyA
+0 1 0 false false false 0 0 false none OtherInfo
+0 1 0 false false false 0 0 false subject OtherInfo
+2 2 12 false false true 0 0 true f14px Title
+1 1 10 false false false 0 0 true none Author
+1 0 10 true false false 0 1 false statisticsclearfix VandC
+1 0 16 false true false 1 0 false lastupdate ReplyD
+1 1 4 false false false 0 0 true none ReplyA
 
-0 1 0 false false false false none OtherInfo
-0 1 0 false false false false subject OtherInfo
-1 1 18 false false true false none Title
-1 1 2 false false false false none Author
-1 0 7 true false false false statistisclearfix VandC
-1 0 17 false true false true lastupdate ReplyD
-1 1 2 false false false false none ReplyA
+0 1 0 false false false 0 0 false none OtherInfo
+0 1 0 false false false 0 0 false subject OtherInfo
+1 1 10 false false true 0 0 true f14px Title
+1 1 4 false false false 0 0 true none Author
+1 0 6 true false false 0 1 false statiisticsclearfix VandC
+1 0 16 false true false 1 0 false lastupdate ReplyD
+1 1 6 false false false 0 0 true none ReplyA
 
-7 6 20 false false false false icn Title
-2 1 9 false true false true by AuthorAndDate
-2 1 4 true false false false num VandC
-2 2 8 false true true false by ReplyAandD
+2 2 20 false false false 0 0 true icn Title
+2 1 10 false true false 1 0 false by AuthorAndDate
+2 1 4 true false false 0 1 false num VandC
+2 2 5 false true true 2 0 false by ReplyAandD
 
-6 5 21 false false false false icn Title
-2 1 9 false true false true by AuthorAndDate
-2 1 3 true false false false num VandC
-2 2 4 false true true false by ReplyAandD
+2 2 13 false false false 0 0 true icn Title
+2 1 8 false true false 1 0 false by AuthorAndDate
+2 1 2 true false false 0 1 false num VandC
+2 2 6 false true true 2 0 false by ReplyAandD
 
-1 2 20 false false false false board-list-title-inner Title
-1 1 6 false false false false none Author
-1 0 11 false true false true date AuthorDate
-2 0 6 true false false false board-list-count-inner VandC
-2 1 12 false true false false board-list-reply ReplyAandD
+1 2 18 false false false 0 0 true board-list-title-inner Title
+1 1 12 false false false 0 0 true none Author
+1 0 11 false true false 1 0 false date AuthorDate
+2 0 4 true false false 0 1 false board-list-count-inner VandC
+2 1 11 false true false 2 0 false board-list-reply ReplyAandD
 
-2 2 20 false false false false board-list-title-inner Title
-1 1 3 false false false false none Author
-1 0 11 false true false true date AuthorDate
-2 0 4 true false false false board-list-count-inner VandC
-2 1 12 false true false false board-list-reply ReplyAandD
+2 2 18 false false false 0 0 true board-list-title-inner Title
+1 1 2 false false false 0 0 true none Author
+1 0 11 false true false 1 0 false date AuthorDate
+2 0 5 true false false 0 1 false board-list-count-inner VandC
+2 1 11 false true false 2 0 false board-list-reply ReplyAandD
 
-0 1 0 false false false false none OtherInfo
-0 0 0 false false false false shadowbox_avatar OtherInfo
-5 4 19 false false false false maincont_list Title
-1 1 4 false false false false author_list Author
-0 0 0 false false false false none OtherInfo
-1 0 4 false true true true none AuthorDate
+0 1 0 false false false 0 0 false none OtherInfo
+2 2 33 false false false 0 0 true maincont_list Title
+1 1 13 false false false 0 0 true author_list Author
+1 0 4 false true true 1 0 false none AuthorDate
 
-0 1 0 false false false false none OtherInfo
-0 0 0 false false false false shadowbox_avatar OtherInfo
-5 4 34 false false false false maincont_list Title
-1 1 13 false false false false author_list Author
-0 0 0 false false false false none OtherInfo
-1 0 4 false true true true none AuthorDate
+0 1 0 false false false 0 0 false none OtherInfo
+1 1 19 false false false 0 0 true maincont_list Title
+1 1 7 false false false 0 0 true author_list Author
+1 0 4 false true true 1 0 false none AuthorDate
 
-2 2 20 false false false false iconicon-top-1 Title
-1 1 5 false false false false ajaxdialog Author
-0 0 0 false false false false none OtherInfo
-1 0 3 false true false true smallgrey2 AuthorDate
-1 1 5 false false false false ajaxdialog ReplyA
-0 0 0 false false false false none OtherInfo
-1 0 3 false true false false smallgrey2 ReplyD
-1 0 4 true false false false smallgrey VandC
-0 0 0 false false false false smallgreyviews OtherInfo
-0 0 0 false false false false none OtherInfo
+2 2 20 false false false 0 0 true iconicon-top-1 Title
+1 1 5 false false false 0 0 true ajaxdialog Author
+1 0 4 false true false 1 0 false smallgrey2 AuthorDate
+1 0 4 true false false 0 1 false smallgrey VandC
 
-4 4 39 false false false false iconicon-post-blue Title
-1 1 6 false false false false ajaxdialog Author
-0 0 0 false false false false none OtherInfo
-1 0 5 false true false true smallnew AuthorDate
-1 1 7 false false false false ajaxdialog ReplyA
-0 0 0 false false false false none OtherInfo
-1 0 5 false true false false smallgrey2 ReplyD
-1 0 3 true false false false smallgrey VandC
-0 0 0 false false false false smallgreyviews OtherInfo
-0 0 0 false false false false none OtherInfo
+2 2 42 false false false 0 0 true iconicon-post-blue Title
+1 1 4 false false false 0 0 true ajaxdialog Author
+1 0 4 false true false 1 0 false smallgrey2 AuthorDate
+1 0 3 true false false 0 1 false smallgrey VandC
 
-0 1 0 false false false false icn OtherInfo
-7 5 46 false false false false commontotalTop Title
-1 1 7 false false false false author Author
-1 0 2 true false false false reply VandC
-1 0 4 true false false false popular VandC
-1 0 1 true false false false grade OtherInfo
-2 1 10 false true false true last ReplyAandD
-
-0 1 0 false false false false folder OtherInfo
-10 9 20 false false false false hot Title
-2 1 10 false true false true author AuthorAndDate
-3 0 6 true false false false nums VandC
-3 2 15 false true false false lastpost ReplyAandD
+0 1 0 false false false 0 0 false icn OtherInfo
+2 2 32 false false false 0 0 true common Title
+1 1 5 false false false 0 0 true author Author
+1 0 2 true false false 0 1 false reply VandC
+1 0 4 true false false 0 2 false popular VandC
+1 0 1 true false false 0 3 false grade OtherInfo
+2 1 10 false true false 1 0 false last ReplyAandD

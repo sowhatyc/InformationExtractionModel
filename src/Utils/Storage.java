@@ -4,6 +4,9 @@
  */
 package Utils;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,6 +29,25 @@ public class Storage {
             success = false;
         }
         return success;
+    }
+    
+    public String readFile(String filePath){
+    	StringBuffer sb = new StringBuffer();
+    	BufferedReader br = null;
+    	try {
+			br = new BufferedReader(new FileReader(filePath));
+			String line;
+			while((line = br.readLine()) != null){
+				sb.append(line);
+				sb.append("\n");
+			}
+			br.close();
+			return sb.toString();
+		}  catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
     
 }

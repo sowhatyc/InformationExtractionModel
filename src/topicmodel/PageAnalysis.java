@@ -522,7 +522,8 @@ public class PageAnalysis {
     public List<EntityNode> getElementNode(List<Elements> elesList){
         List<ElementNode> eNodeList = new ArrayList<>();
         int count = 0;
-        for(Elements eles : elesList){
+        for(int i=0; i<elesList.size(); i++){
+        	Elements eles = elesList.get(i);
             ElementNode eNode = new ElementNode();
             List<Node> nodeList = new ArrayList<>();
             for(Element ele : eles){
@@ -531,6 +532,12 @@ public class PageAnalysis {
             eNode.setNodes(nodeList);
             eNode.setPositionIndex(count++);
             eNodeList.add(eNode);
+        }
+        ElementNode extraENode = null;
+        String firstTag = eNodeList.get(0).getNodes().get(0).getTextNodeUnit().getTag().toString();
+        String secondTag = eNodeList.get(1).getNodes().get(0).getTextNodeUnit().getTag().toString();
+        if(!firstTag.equals(secondTag)){
+        	extraENode = eNodeList.remove(0);
         }
         FreqElementAttr fea = extractorRules.get(baseUrl+type);
         int continualNum = fea.getContinualNum();
@@ -583,6 +590,9 @@ public class PageAnalysis {
             }
             eNodeList.addAll(eNList);
         }
+        if(extraENode != null){
+        	eNodeList.add(extraENode);
+        }
         Collections.sort(eNodeList, new Comparator<ElementNode>() {
 
             @Override
@@ -617,20 +627,203 @@ public class PageAnalysis {
         return entityList;
     }
     
-    public void getFeatures(List<EntityNode> entityList){
+    public void getContentFeatures(List<EntityNode> entityList){
     	if(entityList == null || entityList.size() == 0){
     		return;
     	}
     	for(EntityNode entity : entityList){
-    		boolean alreadyContainDate = false;
+    		int dateNum = 0;
+    		int userNum = 0;
+    		int contentNum = 0;
     		for(TextNode tn : entity.getEntityUnit()){
     			int textNum = 0;
         		int linkNum = 0;
         		int longestTextSize = 0;
-        		boolean isOnlyNumeric = true;
+        		boolean longestTextSmallerThanTwo = false;
+        		boolean longestTextBiggerThanTen = false;
+        		boolean rowTag = false;
+        		boolean rowInfo = false;
+//        		String titleContent = "";
+        		boolean containTime = false;
+        		boolean containUser = false;
+        		boolean containContent = false;
+        		boolean textContainsDate = false;
+        		boolean textContainsFaBiaoYu = false;
+        		boolean tagNameEqualsH = false;
+        		boolean classContiansName = false;
+        		boolean textContainsUID = false;
+        		boolean textContainsDateInSeconds = false;
+        		int textContiansDateNum = 0;
+        		boolean titleContainsDate = false;
+        		boolean textEqualsValue = false;
+        		boolean hrefContainsDigit = false;
+        		boolean hrefContainsUID = false;
+        		boolean classContainsTime = false;
+        		boolean classContainsContent = false;
+        		boolean classContiansReply = false;
+        		boolean idContainsMessage = false;
+        		boolean idContainsRead = false;
+        		boolean tagNameEqualsP = false;
+        		boolean valueContainsFontSize = false;
+        		String classAttr = "";
+        		String text = "";
+        		for(TextNodeUnit tnu : tn.getTextNodeUnit()){
+        			if(!tnu.getText().equals("")){
+    					textNum++;
+    					text += tnu.getText();
+    					if(tnu.getText().length() > longestTextSize){
+    						longestTextSize = tnu.getText().length();
+    					}
+    				}
+        			for(Attribute attr : tnu.getAttributes()){
+        				if(attr.getKey().equals("href") || attr.getKey().equals("src")){
+        					linkNum++;
+        					String href = attr.getValue();
+        					if(href.contains("/") || href.contains("&") || href.contains(".htm") || href.contains("?")){
+//        						linkNum++;
+        						if(href.toLowerCase().contains("uid")){
+            						hrefContainsUID = true;
+            					}
+            					Pattern pattern = Pattern.compile(".*?\\d{6,}([^-~&_.\\d]+?|$)");
+            					Matcher matcher = pattern.matcher(href);
+            					if(matcher.find()){
+            						hrefContainsDigit = true;
+            					}
+        					}
+        				}
+        				if(attr.getKey().equals("title")){
+//        					titleContent = attr.getValue();
+        					Pattern pattern = Pattern.compile(".*?(\\d{4}(-|/)\\d{1,2}(-|/)\\d{1,2}(\\s|,)\\d{1,2}:\\d{1,2}).*?");
+        					Matcher matcher = pattern.matcher(attr.getValue());
+        					if(matcher.find()){
+        						titleContainsDate = true;
+        	        		}
+        				}
+        				if(!tnu.getText().equals("") && attr.getValue().equals(tnu.getText())){
+        					textEqualsValue = true;
+        				}
+        				if(attr.getValue().toLowerCase().contains("font-size")){
+        					valueContainsFontSize = true;
+        				}
+        				if(attr.getKey().equals("class")){
+        					if(classAttr.equals("") & !attr.getValue().equals("")){
+        						classAttr = attr.getValue().replaceAll("\\s", "");
+        					}
+        					if(attr.getValue().toLowerCase().contains("time")){
+        						classContainsTime = true;
+        					}
+        					if(attr.getValue().toLowerCase().contains("content")){
+        						classContainsContent = true;
+        					}
+        					if(attr.getValue().toLowerCase().contains("reply")){
+        						classContiansReply = true;
+        					}
+        					if(attr.getValue().toLowerCase().contains("name")){
+        						classContiansName = true;
+        					}
+        				}
+        				if(attr.getKey().equals("id")){
+        					if(attr.getValue().toLowerCase().contains("message")){
+        						idContainsMessage = true;
+        					}
+        					if(attr.getValue().toLowerCase().contains("read")){
+        						idContainsRead = true;
+        					}
+        				}
+        			}
+        			if(tnu.getTag().getName().equals("p")){
+        				tagNameEqualsP = true;
+        			}
+        			if(tnu.getTag().getName().contains("h")){
+        				tagNameEqualsH = true;
+        			}
+        			if(tnu.getTag().getName().equals("dt") || tnu.getTag().getName().equals("dd")
+        					|| tnu.getTag().getName().equals("li") || tnu.getTag().getName().equals("i")){
+        				rowTag = true;
+        			}
+        		}
+//        		if(textNum == 0 && !titleContent.equals("")){
+//        			textNum = 1;
+//        			longestTextSize = titleContent.length();
+//        		}
+        		if(textNum == 0){
+        			continue;
+        		}
+        		if(classAttr.equals("")){
+    				classAttr = "none";
+    			}
+        		if(longestTextSize < 3){
+        			longestTextSmallerThanTwo = true;
+        		}
+        		if(longestTextSize > 10){
+        			longestTextBiggerThanTen = true;
+        		}
+        		if(text.toLowerCase().contains("uid")){
+        			textContainsUID = true;
+        		}
+        		Pattern pattern = Pattern.compile(".*?发表于.*?");
+        		Matcher matcher = pattern.matcher(text);
+        		if(matcher.find()){
+        			textContainsFaBiaoYu = true;
+        		}
+        		pattern = Pattern.compile(".*?((\\d{4}(-|/)\\d{1,2}(-|/)\\d{1,2}(\\s|,)\\d{1,2}:\\d{1,2})|(\\d{1,2}\\s*月\\s*\\d{1,2})|(\\d+(分钟|秒|小时|天|月)前)).*?");
+        		matcher = pattern.matcher(text);
+        		while(matcher.find()){
+        			textContainsDate = true;
+        			++textContiansDateNum;
+        		}
+        		pattern = Pattern.compile(".*?\\d{4}(-|/)\\d{1,2}(-|/)\\d{1,2}(\\s|,)\\d{1,2}:\\d{1,2}:\\d{1,2}.*?");
+        		matcher = pattern.matcher(text);
+        		if(matcher.find()){
+        			textContainsDateInSeconds = true;
+        		}
+        		if(textContainsDate || textContainsFaBiaoYu || textContainsDateInSeconds
+        				|| titleContainsDate || classContainsTime){
+        			containTime = true;
+        			++dateNum;
+        		}
+        		if(textEqualsValue || hrefContainsDigit || hrefContainsUID
+        				|| tagNameEqualsH || classContiansName || textContainsUID){
+        			containUser = true;
+        			++userNum;
+        		}
+        		if(classContainsContent || classContiansReply || idContainsMessage
+        				|| tagNameEqualsP || valueContainsFontSize || idContainsRead){
+        			containContent = true;
+        			++contentNum;
+        		}
+        		if(rowTag || containUser){
+        			rowInfo = true;
+        		}
+        		System.out.println((textNum >= 2 ? 2 : textNum) + " " + (linkNum >= 2 ? 2 : linkNum) + " "
+        				+ longestTextSize + " " + longestTextSmallerThanTwo + " "
+        				+ longestTextBiggerThanTen + " " +  (containTime ? textContiansDateNum : 0) + " "
+        				+ (containTime ? dateNum : 0) + " " + containTime + " " 
+        				+ (containUser ? userNum : 0) + " " + rowInfo + " " 
+        				+ (containContent ? contentNum : 0) + " " + containContent + " " 
+        				+ classAttr);
+    		}
+    		System.out.println();
+    	}
+    }
+    
+    public void getListFeatures(List<EntityNode> entityList){
+    	if(entityList == null || entityList.size() == 0){
+    		return;
+    	}
+    	for(EntityNode entity : entityList){
+//    		boolean alreadyContainDate = false;
+    		int digitNum = 0;
+    		int dateNum = 0;
+    		for(TextNode tn : entity.getEntityUnit()){
+    			int textNum = 0;
+        		int linkNum = 0;
+        		int longestTextSize = 0;
+        		boolean isOnlyNumeric = false;
         		boolean isContainDate = false;
         		boolean titleContainDate = false;
         		boolean firstDate = false;
+        		boolean onlyTextAndLink = false;
         		String classAttr = "";
         		String text = "";
     			for(TextNodeUnit tnu : tn.getTextNodeUnit()){
@@ -657,30 +850,61 @@ public class PageAnalysis {
     					classAttr = classAttr.replaceAll("\\s", "");
     				}
     			}
+//    			if(isListPage && textNum == 0 && linkNum == 0){
+//    				continue;
+//    			}else if(!isListPage && textNum == 0){
+//    				continue;
+//    			}
+    			if(textNum == 0 && linkNum == 0){
+    				continue;
+    			}
     			if(classAttr.equals("")){
     				classAttr = "none";
     			}
     			if(!text.equals("")){
-    				Pattern pattern = Pattern.compile("^/?\\d[0-9/\\s]*$");
+    				Pattern pattern = Pattern.compile("^/?\\s*\\d[0-9/\\s]*$");
     				Matcher isNum = pattern.matcher(text);
-					if(!isNum.matches()){
-						isOnlyNumeric = false;
+					if(isNum.matches()){
+						String[] nums = text.split("/");
+						int i;
+						for(i=0; i<nums.length; i++){
+							if(nums[i].length() >= 8){
+								break;
+							}
+						}
+						if(i == nums.length){
+							isOnlyNumeric = true;
+							digitNum++;
+						}
 					}
-					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}\\s?(-|/|:)\\s?\\d{1,2})|((分钟|秒|小时|天|月)前))[^\\d]*?");
+//					if(isListPage){
+//						pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}\\s?(-|/|:|月)\\s?\\d{1,2})|((分钟|秒|小时|天|月)前))[^\\d].*?");
+//					}else{
+//						pattern = Pattern.compile(".*?\\d{4}(-|/)\\d{1,2}(-|/)\\d{1,2}(\\s|,)\\d{1,2}:\\d{1,2}.*?");
+//					}
+					pattern = Pattern.compile(".*?(((\\d{4}(-|/))?\\d{1,2}\\s?(-|/|:|月)\\s?\\d{1,2})|((分钟|秒|小时|天|月)前))[^\\d].*?");
 					Matcher isDate = pattern.matcher(text);
 					if(isDate.matches()){
 						isContainDate = true;
-						if(!alreadyContainDate){
-							firstDate = true;
-							alreadyContainDate = true;
-						}
+						dateNum++;
 					}
-    			}else{
-    				isOnlyNumeric = false;
-    				isContainDate = false;
+//					else if(titleContainDate && !isListPage){
+//						pattern = Pattern.compile(".*?(((\\d{4}(-|/|年))?\\d{1,2}\\s?(-|/|:|月)\\d{1,2})|((分钟|秒|小时|天|月)前)).*?");
+//						isDate = pattern.matcher(text);
+//						if(isDate.matches()){
+//							isContainDate = true;
+//							dateNum++;
+//						}
+//					}
     			}
-    			System.out.println(textNum + " " + linkNum + " " + longestTextSize + " " + isOnlyNumeric + " "
-    					+ isContainDate + " " + titleContainDate + " " + firstDate + " " + classAttr);
+    			if(textNum > 0 && linkNum > 0 && !isOnlyNumeric && !isContainDate){
+    				onlyTextAndLink = true;
+    			}
+    			System.out.println((textNum >= 2 ? 2 : textNum) + " " + (linkNum >= 2 ? 2 : linkNum) + " " 
+    					+ longestTextSize + " " + isOnlyNumeric + " "
+    					+ isContainDate + " " + titleContainDate + " " + (isContainDate ? dateNum : 0) + " " 
+    					+ (isOnlyNumeric ? digitNum : 0) + " " + onlyTextAndLink 
+    					+ " " + classAttr);
     		}
     		System.out.println();
     	}
@@ -960,11 +1184,13 @@ public class PageAnalysis {
         String seq = "";
         if(eNode.getNodes() != null){
             for(Node node : eNode.getNodes()){
+//            	seq += "<" + node.getTextNodeUnit().getTag().toString() + ">";
                 if(node.getChildNode() != null){
                     for(Node childNode : node.getChildNode()){
                         seq += getNodeSeq(childNode, onlyStructrueNode, false, level);
                     }
                 }
+//                seq += "</" + node.getTextNodeUnit().getTag().toString() + ">"; 
             }
         }
         return seq;

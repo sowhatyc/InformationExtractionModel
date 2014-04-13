@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -53,12 +55,10 @@ public class WebCrawler {
         public boolean retryRequest(IOException ioe, int executionCount, HttpContext hc) {
 //            throw new UnsupportedOperationException("Not supported yet.");
             if (executionCount >= 3) {  
-                // 如果连接次数超过了最大值则停止重试  
                 System.err.println("Exceed the maximum connection count");
                 return false;  
             }
             if(ioe instanceof NoHttpResponseException){
-                // 如果服务器连接失败重试
                 System.err.println("Failed to connect to the server");
                 return true;
             }
@@ -127,7 +127,13 @@ public class WebCrawler {
                 String content = null;
                 if(entity != null){
                     InputStream instream = entity.getContent();
-                    contentBytes = IOUtils.toByteArray(instream);
+                    if(entity.getContentEncoding() != null && entity.getContentEncoding().getValue().toLowerCase().indexOf("gzip") > -1){
+                		GZIPInputStream gzin = new GZIPInputStream(instream);
+                		contentBytes = IOUtils.toByteArray(gzin);
+                	}else{
+                		contentBytes = IOUtils.toByteArray(instream);
+                	}
+//                    contentBytes = IOUtils.toByteArray(instream);
                     String encode = ContentType.getOrDefault(entity).getCharset().toString();
                     if(encode == null){
                         encode = getEncode(contentBytes);

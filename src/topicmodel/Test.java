@@ -45,12 +45,12 @@ import org.jsoup.select.Elements;
 public class Test {
     
     public static void main(String args[]){
-    	//mop楼主无法抽出,soufun编码方式不对,55bbs对齐为一个
+    	//mop楼主无法抽出,55bbs对齐为一个
+    				  boolean isListPage = false;
             //        System.out.println(new WebCrawler().getContent("http://bbs.tianya.cn/list-develop-1.shtml"));
             //        System.out.println(new WebCrawler().getContentMethod2("http://bbs.tianya.cn/list-develop-1.shtml"));
 //                    String url = "http://bbs.tianya.cn/list-828-1.shtml";
 //                    String url = "http://bbs.tianya.cn/post-828-207037-1.shtml";
-        //tieba's content consists javascript
 //                    String url = "http://tieba.baidu.com/f?ie=utf-8&kw=%B1%F6%B5%C3k5";
 //                    String url = "http://tieba.baidu.com/p/2426049054";
 //                    String url = "http://bbs.gfan.com/forum-1260-1.html";
@@ -85,13 +85,53 @@ public class Test {
 //    				String url = "http://bbs.55bbs.com/forum-7-1.html";
 //    				String url = "http://bbs.55bbs.com/thread-9067689-1-1.html";
 //    				String url = "http://bbs.1lou.com/forum-index-fid-951.htm";
-//    				String url = "http://bbs.1lou.com/thread-index-fid-951-tid-4159105.htm";
+//    				String url = "http://bbs.1lou.com/thread-index-fid-2-tid-4132678.htm";
 //    				String url = "http://newbbs.fengniao.com/forum_65.html";
 //    				String url = "http://newbbs.fengniao.com/3198414.html";
 //    				String url = "http://bbs.mydrivers.com/forum-92-1.html";
 //    				String url = "http://bbs.mydrivers.com/thread-300812-1-1.html";
-    				String url = "http://bbs.rayli.com.cn/forum-19-1.html";
+//    				String url = "http://bbs.rayli.com.cn/forum-19-1.html";
 //    				String url = "http://bbs.rayli.com.cn/thread-51899708-1-1.html";
+//    				String url = "http://bbs.huanqiu.com/forum-57-1.html";
+//    				String url = "http://bbs.huanqiu.com/thread-1511375-1-1.html";
+//    				String url = "http://www.19lou.com/forum-9-1.html";
+//    				String url = "http://www.19lou.com/forum-9-thread-6181395323795041-1-1.html";
+//    				String url = "http://bbs.southcn.com/forum-14-1.html";
+//    				String url = "http://bbs.southcn.com/thread-565952-1-1.html";
+//    				String url = "http://house.focus.cn/msglist/7366/";
+//    				String url = "http://house.focus.cn/msgview/7366/290964942.html";
+//    				String urn = "http://bbs.17173.com/forum-1795-1.html";
+//    				String url = "http://bbs.17173.com/thread-7920518-1-1.html";
+//    				String url = "http://bbs.ikaka.com/showforum-112.aspx";
+//    				String url = "http://bbs.ikaka.com/showtopic-9169674.aspx";
+//    				String url = "http://bbs.dospy.com/forum-855-1.html";
+//    				String url = "http://bbs.dospy.com/thread-16886246-1-855-1.html";
+//    				String url = "http://itbbs.pconline.com.cn/notebook/f301622.html";
+//    				String url = "http://itbbs.pconline.com.cn/notebook/16499661.html";
+//    				String url = "http://bbs.wps.cn/forum-fensileyuan-1.html";
+//    				String url = "http://bbs.wps.cn/thread-22392300-1-1.html";
+//    				String url = "http://91baby.mama.cn/forum-40-1.html";
+//    				String url = "http://91baby.mama.cn/thread-1118421-1-1.html";
+//    				String url = "http://club.alipay.com/thread.php?fid=752";
+//    				String url = "http://club.alipay.com/read-htm-tid-10760953.html";
+//    				String url = "http://bbs.guoxue.com/forumdisplay.php?fid=5074";
+//    				String url = "http://bbs.guoxue.com/viewthread.php?tid=765400&extra=page%3D1";
+//    				String url = "http://bbs.hupu.com/cba";
+//    				String url = "http://bbs.hupu.com/9230926.html";
+//    				String url = "http://bbs.xdnice.com/forum-17-1.html";
+//    				String url = "http://bbs.xdnice.com/thread-871668-1-1.html";
+//    				String url = "http://bbs.uc.cn/forum-366-1.html";
+//    				String url = "http://bbs.uc.cn/thread-4769687-1-1.html";
+//    				String url = "http://bbs.shangdu.com/f/01001001/";
+//    				String url = "http://bbs.shangdu.com/t/20140404/01001001630420/630420-1.htm";
+//    				String url = "http://www.admin5.net/forum-310-1.html";
+//    				String url = "http://www.admin5.net/thread-14057221-1-1.html";
+//    				String url = "http://bbs.8264.com/forum-12-1.html";
+//    				String url = "http://bbs.8264.com/thread-1851751-1-1.html";
+//    				String url = "http://www.6665.com/forum-4474-1.html";
+    				String url = "http://www.6665.com/thread-2997175-1-1.html";
+//    				String url = "http://www.abbs.com.cn/bbs/post/page?bid=1&sty=1&age=0";
+//    				String url = "http://www.abbs.com.cn/bbs/post/view?bid=1&id=340146296&sty=1&tpg=1&age=0";
                     String retVal[] = new WebCrawler().getContent(url);
                     PageAnalysis pa = new PageAnalysis();
 //                    StringBuffer sb = new StringBuffer();
@@ -108,7 +148,7 @@ public class Test {
 //						e.printStackTrace();
 //					}
 //                    List<Elements> elesList = pa.getAnalysisiElements(sb.toString(), url, true);
-                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, true);
+                    List<Elements> elesList = pa.getAnalysisiElements(retVal[1], url, isListPage);
 //        String content = new WebCrawler().getContentMethod2(url);
 //                    long start = System.currentTimeMillis();
 //                    Document doc = Jsoup.parse(retVal[1], StaticLib.getBaseUrl(url));
@@ -245,8 +285,13 @@ public class Test {
             }
         }
         
-//        System.out.print("\n\n\n");
-//        pa.getFeatures(elementTextList);
+        System.out.print("\n\n\n");
+        if(isListPage){
+        	pa.getListFeatures(elementTextList);
+        }else{
+        	pa.getContentFeatures(elementTextList);
+        }
+//        pa.getFeatures(elementTextList, false);
         
 //        Map<String, ArrayList<Element>> minimalGeneralSeq = pa.getMinimalGeneralizationSeq(elesList);
 //        Iterator<String> iter = minimalGeneralSeq.keySet().iterator();
